@@ -20,7 +20,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var username = prompt('Please enter a username:');
-        var uri = 'ws://' + window.location.hostname + '@Url.Content("~/Quiz.ashx")' + '?username=' + username;
+        var uri = 'ws://' + window.location.host + '@Url.Content("~/Quiz.ashx")' + '?username=' + username;
         QuizController.init(document.getElementById('usersList'), document.getElementById('questionForm'), uri, document.getElementById('challengeResult'));
     });
 </script>
