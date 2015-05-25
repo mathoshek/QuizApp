@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<label>Users List:</label>
+<ul id="usersList">
+</ul>
+<div id="questionForm">
+    <h3>Question:</h3>
+    <label id="question"></label>
+    <h3>Time to answer:</h3>
+    <label id="timer"></label>
+    <button id="answer0"></button>
+    <button id="answer1"></button>
+    <button id="answer2"></button>
+    <button id="answer3"></button>
+    <label id="correct"></label>
+</div>
+<label id="challengeResult"></label>
+<script src="~/Scripts/QuizController.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var username = prompt('Please enter a username:');
+        var uri = 'ws://' + window.location.hostname + '@Url.Content("~/Quiz.ashx")' + '?username=' + username;
+        QuizController.init(document.getElementById('usersList'), document.getElementById('questionForm'), uri, document.getElementById('challengeResult'));
+    });
+</script>
