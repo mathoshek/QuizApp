@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,11 @@ namespace QuizApp.Controllers
 {
     public class AdminController : Controller
     {
+        private QuizAppRepo repo = new QuizAppRepo();
 
         public ActionResult Index()
         {
+            ViewBag.Users = repo.getUsers();
             return View();
         }
 

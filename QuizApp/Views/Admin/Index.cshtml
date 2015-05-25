@@ -1,5 +1,14 @@
 ﻿@{
     ViewBag.Title = "Admin";
+    var lista = ViewBag.Users as List<Repository.Users>;
 }
 
-<h2>Admin</h2>
+<h2>Users</h2>
+<ul>
+    @foreach (var user in lista)
+    {
+        <li>
+            @user.username
+        </li>
+    }
+</ul>
