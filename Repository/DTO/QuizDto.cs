@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository.DTO
 {
-    class QuizDto
+    public class QuizDto
     {
         public int Id { get; set; }
         public string QuizTitle { get; set; }

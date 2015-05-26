@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="DTO\QuizDto.cs" />
     <Compile Include="DTO\QuizQuestionDto.cs" />
-    <Compile Include="DTO\User.cs" />
+    <Compile Include="DTO\UserDto.cs" />
     <Compile Include="Quiz.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
