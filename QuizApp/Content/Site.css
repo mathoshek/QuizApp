@@ -42,6 +42,11 @@ mark {
     padding-right: 5px;
 }
 
+.mytext {
+    width: 500px;
+    height: 300px;
+}
+
 .float-left {
     float: left;
 }

@@ -1,0 +1,59 @@
+﻿@{
+   ViewBag.Title = "Admin";
+}
+
+<h2>Question</h2>
+
+<div><h2>Detalii intrebare...</h2></div>
+    <div>
+        <form name="formQuestion" method="post" action="/Admin/Question">
+            <fieldset>
+                <legend>
+                    Editare/Creare intrebare
+                </legend>
+                <ol>
+                    <li>
+                        <input id="btnSaveQuestion" type="button" value="Salveaza" />    
+                    </li>
+                    <li>
+                        <label for="QuestionText">Textul Intrebarii:</label>
+                        <textarea name="QuestionText" id="QuestionText" class="mytext"> </textarea>
+                         
+                    </li>
+                    <li>
+                        <div>
+                        <input type="radio" name="typeAnswer" value="SingleChoice" checked>O sigura varianta
+                        <input type="radio" name="typeAnswer" value="MultipleChoice">Mai multe variante
+                        </div>
+                    </li>
+                    <li>
+                        <div>         
+                            <label for="FirstAnswer">Prima Varianta de raspuns</label>
+                            <textarea name="FirstAnswer" id="FirstAnswer" class="mytext"> </textarea>
+                            <input type="checkbox" name="FirstAnswerCorrect" value="Correct" /> Corect
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <label for="SecondAnswer">A doua Varianta de raspuns</label>
+                            <textarea name="SecondAnswer" id="SecondAnswer" class="mytext"> </textarea>
+                            <input type="checkbox" name="SecondAnswerCorrect" value="Correct" /> Corect
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <label for="ThirdAnswer">A treia Varianta de raspuns</label>
+                            <textarea name="ThirdAnswer" id="ThirdAnswer" class="mytext"> </textarea>
+                            <input type="checkbox" name="ThirdAnswerCorrect" value="Correct" /> Corect
+                        </div>
+                    </li>
+                    <li>
+                        <input id="btnSaveQuestion" type="button" value="Salveaza" />
+                    </li>
+                </ol>
+            </fieldset>
+        </form>
+    </div>
+  
+
+
