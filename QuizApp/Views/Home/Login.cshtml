@@ -1,0 +1,43 @@
+﻿@model QuizApp.Models.UserModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.Message != null)
+    {
+        <div style="border:2px solid red">
+            @ViewBag.Message;
+        </div>
+    }
+    <table>
+        <tr>
+            <td>@Html.LabelFor(u=>u.Username)</td>
+            <td>@Html.TextBoxFor(u=>u.Username)</td>
+            <td>@Html.ValidationMessageFor(u=>u.Username)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(u=>u.Password)</td>
+            <td>@Html.TextBoxFor(u=>u.Password)</td>
+            <td>@Html.ValidationMessageFor(u=>u.Password)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Login" />
+                <input type="submit" value="Register" />
+            </td>
+            <td></td>
+        </tr>
+        
+    </table>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
