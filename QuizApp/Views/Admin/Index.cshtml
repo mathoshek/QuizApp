@@ -6,7 +6,7 @@
 
     <div> <h1>Toate intrebarile.....</h1></div>
     <div>
-        <input id="btnNewQuestion" type="button" value="Intrebare noua" />
+        <input id="btnNewQuestion" type="button" value="Intrebare noua" onclick="@("window.location.href='" + @Url.Action("Question", "Admin") + "'");" />
         <ul>
             <li>
                 <a href="@Url.Action("Question")"> Prima intrebare </a>

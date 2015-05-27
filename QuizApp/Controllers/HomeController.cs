@@ -10,7 +10,7 @@ namespace QuizApp.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login");
         }
 
         public ActionResult Login()

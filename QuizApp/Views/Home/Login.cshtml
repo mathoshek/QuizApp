@@ -23,14 +23,14 @@
         </tr>
         <tr>
             <td>@Html.LabelFor(u=>u.Password)</td>
-            <td>@Html.TextBoxFor(u=>u.Password)</td>
+            <td>@Html.PasswordFor(u=>u.Password )</td>
             <td>@Html.ValidationMessageFor(u=>u.Password)</td>
         </tr>
         <tr>
             <td></td>
             <td>
                 <input type="submit" value="Login" />
-                <input type="submit" value="Register" />
+                <input type="submit" value="Register" onclick="@("window.location.href='" + @Url.Action("Register", "Home") + "'");" />
             </td>
             <td></td>
         </tr>

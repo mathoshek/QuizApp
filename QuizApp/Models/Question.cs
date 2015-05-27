@@ -10,7 +10,11 @@ namespace QuizApp.Models
         public string Id { get; set; }
         public string Text { get; set; }
         public List<string> Answers { get; set; }
+        public int FirstAnswer { get; set; }
+        public int SecondAnswer { get; set; }
         public int SecondsToAnswer { get; set; }
+        public int ThirdAnswer { get; set; }
+        public bool Correct { get; set; }
         private int CorrectAnswerIndex;
 
         public Question()
