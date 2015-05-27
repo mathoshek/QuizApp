@@ -39,6 +39,11 @@ namespace QuizApp.Controllers
             return View();
         }
 
+        public ActionResult CreateQuiz()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult CreateDomain(Models.DomainModel domain)
         {
@@ -56,6 +61,12 @@ namespace QuizApp.Controllers
             }
             repository.addQuizQuestion(question.QuestionText, question.FirstAnswer, question.CorrectFirst, question.SecondAnswer, question.CorrectSecond, question.ThirdAnswer, question.CorrectThird, question.DomainId,isSingle );
             return RedirectToAction("Index");
+        }
+    
+        [HttpPost]
+        public ActionResult CreateQuiz(Models.CreateQuizModel quiz)
+        {
+            return View(quiz);
         }
     }
 }
