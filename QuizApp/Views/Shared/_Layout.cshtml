@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var user = Session["LoggedUser"] as Repository.DTO.UserDto;
+}
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -15,6 +18,28 @@
             <div class="content-wrapper">
                 <div class="float-left">
                     <p class="site-title">@Html.ActionLink("QuizApp", "Index", "Home")</p>
+                </div>
+                <div class="float-right">
+                    @if(user == null)
+                    {
+                        @Html.ActionLink("Login", "Login", "Home") 
+                        <span>|</span>
+                        @Html.ActionLink("Register", "Register", "Home")
+                    }
+                    else
+                    {
+                        <span>Logged in as </span><b>
+                        @user.Username
+                        </b><span>|</span>
+                        @Html.ActionLink("Home", "Index", "Home");
+                        <span>|</span>
+                        if (user.Type == "teacher")
+                        {
+                            @Html.ActionLink("Admin", "Index", "Admin");
+                            <span>|</span>
+                        }
+                        @Html.ActionLink("Logout", "Logout", "Home");
+                    }
                 </div>
             </div>
         </header>
