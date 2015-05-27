@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "ViewDomains";
 }
+@{
+    var domains = ViewBag.Domains as List<Repository.DTO.QuizQuestionDomainDto>;
+}
 
 <h2>ViewDomains</h2>
 
@@ -8,11 +11,9 @@
 <div>
     <input id="btnNewQuestion" type="button" value="Domeniu nou" onclick="@("window.location.href='" + @Url.Action("CreateDomain", "Admin") + "'");" />
     <ul>
-        <li>
-            <a href="@Url.Action("Question")"> Primul domeniu </a>
-        </li>
-        <li>
-            <a href="@Url.Action("Question")"> Al doilea Domeniu </a>
-        </li>
+        @foreach (var item in domains)
+        {
+            <li> @item.Name</li>
+        }
     </ul>
 </div>

@@ -3,7 +3,7 @@
    ViewBag.Title = "Question";
 }
 @{
-    var domains = ViewBag.Faculties as List<Repository.User>;
+    var domains = ViewBag.Domains as List<Repository.DTO.QuizQuestionDomainDto>;
 }
 
 <h2>Question</h2>
@@ -21,14 +21,12 @@
                     </li>
                     <li>
                        <label>Selectatii domeniul</label>
-                        <select name="IdFaculty" id="Faculties" style="width: 310px;
+                        <select name="DomainId" id="DomainId" style="width: 310px;
                                height: 30px;">
-                            <option value="id1">domain2</option>
-                            <option value="id2">domain1</option>
-                            @*@foreach (var item in domains)
+                            @foreach (var item in domains)
                             {
-                                <option value="@item.Id" @(item.Id != null ? "selected" : String.Empty)>@item.Username</option>
-                            }*@
+                                <option value="@item.Id" @(item.Id != null? "selected" : String.Empty)>@item.Name</option>
+                            }
                         </select>
                     </li>
                     <li>
@@ -36,8 +34,15 @@
                         @Html.TextAreaFor(q => q.QuestionText)
                     <li>
                         <div>
-                        <input type="radio" name="typeAnswer" value="0" checked>O sigura varianta
-                        <input type="radio" name="typeAnswer" value="1">Mai multe variante
+                            <div >
+                                <label for="single">O singura varianta de raspuns</label>
+                                <input type="radio" name="IsSingle" id="single" value="1" checked />
+                            </div>
+
+                            <div>
+                                <label for="profesor">Mai multe variante de raspuns</label>
+                                <input type="radio" name="IsSingle" id="multiple" value="0" />
+                            </div>   
                         </div>
                     </li>
                     <li>

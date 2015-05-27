@@ -10,14 +10,16 @@ namespace QuizApp.Controllers
 {
     public class AdminController : Controller
     {
-
+        Repository.QuizAppRepo repository = new Repository.QuizAppRepo();
         public ActionResult Index()
         {
+            ViewBag.Questions = repository.getQuizQuestions();
             return View();
         }
 
         public ActionResult Question()
-        {         
+        {
+            ViewBag.Domains = repository.getQuestionDomains();
             return View();
         }
         
@@ -28,6 +30,7 @@ namespace QuizApp.Controllers
 
         public ActionResult ViewDomains()
         {
+            ViewBag.Domains = repository.getQuestionDomains();
             return View();
         }
 
@@ -36,32 +39,34 @@ namespace QuizApp.Controllers
             return View();
         }
 
+        public ActionResult CreateQuiz()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult CreateDomain(Models.DomainModel domain)
         {
-            if (domain.DomainName != null)
-            {
-
-            }
-            else
-            {
-
-            }
-            return View(domain);
+            repository.addQuestionDomain(domain.DomainName);
+            return RedirectToAction("ViewDomains");
         }
 
         [HttpPost]
         public ActionResult Question(Models.QuestionModel question)
         {
-            if (question.QuestionText != null)
+            bool isSingle = false;
+            if (question.isSingle == 1)
             {
-               
+                isSingle = true;
             }
-            else
-            {
-
-            }
-            return View(question);
+            repository.addQuizQuestion(question.QuestionText, question.FirstAnswer, question.CorrectFirst, question.SecondAnswer, question.CorrectSecond, question.ThirdAnswer, question.CorrectThird, question.DomainId,isSingle );
+            return RedirectToAction("Index");
+        }
+    
+        [HttpPost]
+        public ActionResult CreateQuiz(Models.CreateQuizModel quiz)
+        {
+            return View(quiz);
         }
     }
 }

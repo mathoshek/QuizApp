@@ -13,6 +13,7 @@ namespace QuizApp.Models
         public string SecondAnswer { get; set; }
         public string ThirdAnswer { get; set; }
         public int DomainId { get; set; }
+        public int isSingle { get; set; }
         public bool CorrectFirst { get; set; }
         public bool CorrectSecond { get; set; }
         public bool CorrectThird { get; set; }
@@ -34,4 +35,5 @@ namespace QuizApp.Models
             this.DomainId = DomainId;
         }
     }
+
 }
