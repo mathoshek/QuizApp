@@ -191,5 +191,47 @@ namespace Repository
 
             return quizDto;
         }
+
+        //QuizQuestionDomain
+        public List<QuizQuestionDomainDto> getQuestionDomains()
+        {
+            List<QuizQuestionDomainDto> list = new List<QuizQuestionDomainDto>();
+            foreach (var questionDomain in ctx.QuizQuestionDomains)
+            {
+                QuizQuestionDomainDto questionDomainDto = new QuizQuestionDomainDto();
+                questionDomainDto.Id = questionDomain.Id;
+                questionDomainDto.Name = questionDomain.Name;
+                list.Add(questionDomainDto);
+            }
+            return list;
+        }
+
+        public QuizQuestionDomainDto addQuestionDomain(string name)
+        {
+            QuizQuestionDomain questionDomain = new QuizQuestionDomain();
+            questionDomain.Name = name;
+
+            QuizQuestionDomain created = ctx.QuizQuestionDomains.Add(questionDomain);
+            ctx.SaveChanges();
+
+            QuizQuestionDomainDto questionDomainDto = new QuizQuestionDomainDto();
+            questionDomainDto.Id = created.Id;
+            questionDomainDto.Name = created.Name;
+
+            return questionDomainDto;
+        }
+
+        public QuizQuestionDomainDto getQuestionDomain(int id)
+        {
+            QuizQuestionDomain questionDomain = ctx.QuizQuestionDomains.FirstOrDefault(x => x.Id == id);
+            if (questionDomain == null)
+                return null;
+
+            QuizQuestionDomainDto questionDomainDto = new QuizQuestionDomainDto();
+            questionDomainDto.Id = questionDomain.Id;
+            questionDomainDto.Name = questionDomain.Name;
+
+            return questionDomainDto;
+        }
     }
 }
