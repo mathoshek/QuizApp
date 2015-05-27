@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Repository;
+using Repository.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,8 @@ namespace QuizApp.Controllers
 {
     public class HomeController : Controller
     {
+        private QuizAppRepo repo = new QuizAppRepo();
+
         public ActionResult Index()
         {
             return RedirectToAction("Login");
@@ -23,7 +27,8 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (u.Username.Equals("abc") && u.Password.Equals("pass"))
+                UserDto user = repo.getUser(u.Username);
+                if (user != null && user.Password == u.Password)
                 {
                     Session["LoggedUserId"] = 1;
                     Session["LoggedUser"] = u.Username;
