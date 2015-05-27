@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\QuizDto.cs" />
+    <Compile Include="DTO\QuizQuestionDomanDto.cs" />
     <Compile Include="DTO\QuizQuestionDto.cs" />
     <Compile Include="DTO\UserDto.cs" />
     <Compile Include="Quiz.cs">
@@ -78,7 +79,7 @@
     <Compile Include="QuizQuestion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Quiz_QuizQuestion.cs">
+    <Compile Include="QuizQuestionDomain.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">

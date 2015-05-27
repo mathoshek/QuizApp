@@ -73,6 +73,8 @@ namespace Repository
                 quizQuestionDto.Answer2Correct = quizQuestion.Answer2Correct;
                 quizQuestionDto.Answer3Text = quizQuestion.Answer3Text;
                 quizQuestionDto.Answer3Correct = quizQuestion.Answer3Correct;
+                quizQuestionDto.DomainId = quizQuestion.DomainId;
+                quizQuestionDto.IsSingleChoice = quizQuestion.IsSingleChoice;
 
                 list.Add(quizQuestionDto);
             }
@@ -80,7 +82,7 @@ namespace Repository
         }
 
         public QuizQuestionDto addQuizQuestion(string questionText, string answer1Text, bool answer1Correct,
-            string answer2Text, bool answer2Correct, string answer3Text, bool answer3Correct)
+            string answer2Text, bool answer2Correct, string answer3Text, bool answer3Correct, int domainId, bool isSingleChoice)
         {
             QuizQuestion quizQuestion = new QuizQuestion();
             quizQuestion.QuestionText = questionText;
@@ -90,6 +92,8 @@ namespace Repository
             quizQuestion.Answer2Correct = answer2Correct;
             quizQuestion.Answer3Text = answer3Text;
             quizQuestion.Answer3Correct = answer3Correct;
+            quizQuestion.DomainId = domainId;
+            quizQuestion.IsSingleChoice = isSingleChoice;
 
             QuizQuestion created = ctx.QuizQuestions.Add(quizQuestion);
             ctx.SaveChanges();
@@ -103,6 +107,8 @@ namespace Repository
             quizQuestionDto.Answer2Correct = created.Answer2Correct;
             quizQuestionDto.Answer3Text = created.Answer3Text;
             quizQuestionDto.Answer3Correct = created.Answer3Correct;
+            quizQuestionDto.DomainId = created.DomainId;
+            quizQuestionDto.IsSingleChoice = created.IsSingleChoice;
 
             return quizQuestionDto;
         }
@@ -122,6 +128,8 @@ namespace Repository
             quizQuestionDto.Answer2Correct = quizQuestion.Answer2Correct;
             quizQuestionDto.Answer3Text = quizQuestion.Answer3Text;
             quizQuestionDto.Answer3Correct = quizQuestion.Answer3Correct;
+            quizQuestionDto.DomainId = quizQuestion.DomainId;
+            quizQuestionDto.IsSingleChoice = quizQuestion.IsSingleChoice;
 
             return quizQuestionDto;
         }
@@ -137,20 +145,22 @@ namespace Repository
                 quizDto.QuizTitle = quiz.QuizTitle;
                 quizDto.Time = quiz.Time;
                 quizDto.PassingScore = quiz.PassingScore;
-                quizDto.NumQuestions = quiz.Questions;
+                quizDto.NumQuestions = quiz.NumQuestions;
+                quizDto.DomainId = quiz.DomainId;
 
                 list.Add(quizDto);
             }
             return list;
         }
 
-        public QuizDto addQuiz(string quizTitle, int time, float passingScore, int numQuestions)
+        public QuizDto addQuiz(string quizTitle, int time, float passingScore, int numQuestions, int domainId)
         {
             Quiz quiz = new Quiz();
             quiz.QuizTitle = quizTitle;
             quiz.Time = time;
             quiz.PassingScore = passingScore;
-            quiz.Questions = numQuestions;
+            quiz.NumQuestions = numQuestions;
+            quiz.DomainId = domainId;
 
             Quiz creat = ctx.Quizs.Add(quiz);
             ctx.SaveChanges();
@@ -160,8 +170,8 @@ namespace Repository
             quizDto.QuizTitle = creat.QuizTitle;
             quizDto.Time = creat.Time;
             quizDto.PassingScore = creat.PassingScore;
-            quizDto.NumQuestions = creat.Questions;
-
+            quizDto.NumQuestions = creat.NumQuestions;
+            quizDto.DomainId = creat.DomainId;
             return quizDto;
         }
 
@@ -176,9 +186,52 @@ namespace Repository
             quizDto.QuizTitle = quiz.QuizTitle;
             quizDto.Time = quiz.Time;
             quizDto.PassingScore = quiz.PassingScore;
-            quizDto.NumQuestions = quiz.Questions;
+            quizDto.NumQuestions = quiz.NumQuestions;
+            quizDto.DomainId = quiz.DomainId;
 
             return quizDto;
+        }
+
+        //QuizQuestionDomain
+        public List<QuizQuestionDomainDto> getQuestionDomains()
+        {
+            List<QuizQuestionDomainDto> list = new List<QuizQuestionDomainDto>();
+            foreach (var questionDomain in ctx.QuizQuestionDomains)
+            {
+                QuizQuestionDomainDto questionDomainDto = new QuizQuestionDomainDto();
+                questionDomainDto.Id = questionDomain.Id;
+                questionDomainDto.Name = questionDomain.Name;
+                list.Add(questionDomainDto);
+            }
+            return list;
+        }
+
+        public QuizQuestionDomainDto addQuestionDomain(string name)
+        {
+            QuizQuestionDomain questionDomain = new QuizQuestionDomain();
+            questionDomain.Name = name;
+
+            QuizQuestionDomain created = ctx.QuizQuestionDomains.Add(questionDomain);
+            ctx.SaveChanges();
+
+            QuizQuestionDomainDto questionDomainDto = new QuizQuestionDomainDto();
+            questionDomainDto.Id = created.Id;
+            questionDomainDto.Name = created.Name;
+
+            return questionDomainDto;
+        }
+
+        public QuizQuestionDomainDto getQuestionDomain(int id)
+        {
+            QuizQuestionDomain questionDomain = ctx.QuizQuestionDomains.FirstOrDefault(x => x.Id == id);
+            if (questionDomain == null)
+                return null;
+
+            QuizQuestionDomainDto questionDomainDto = new QuizQuestionDomainDto();
+            questionDomainDto.Id = questionDomain.Id;
+            questionDomainDto.Name = questionDomain.Name;
+
+            return questionDomainDto;
         }
     }
 }

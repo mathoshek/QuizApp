@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d2fab383830248ad89692ab562e00722" Name="Diagram1" >
-        <EntityTypeShape EntityType="Model.Quiz" Width="1.5" PointX="3.25" PointY="1.75" />
-        <EntityTypeShape EntityType="Model.Quiz_QuizQuestion" Width="1.5" PointX="5.375" PointY="1.75" />
-        <EntityTypeShape EntityType="Model.QuizQuestion" Width="1.5" PointX="7.625" PointY="1.75" />
-        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="1" PointY="2" />
-        <AssociationConnector Association="Model.FK_Quiz_QuizQuestion_Quiz" />
-        <AssociationConnector Association="Model.FK_Quiz_QuizQuestion_QuizQuestion" />
+        <EntityTypeShape EntityType="Model.Quiz" Width="1.5" PointX="6.375" PointY="1.25" />
+        <EntityTypeShape EntityType="Model.QuizQuestion" Width="1.5" PointX="1.5" PointY="1.25" />
+        <EntityTypeShape EntityType="Model.QuizQuestionDomain" Width="1.5" PointX="4" PointY="1.25" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="8.5" PointY="1.25" />
+        <AssociationConnector Association="Model.FK_Quiz_QuizQuestionDomain" />
+        <AssociationConnector Association="Model.FK_QuizQuestion_QuizQuestionDomain" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

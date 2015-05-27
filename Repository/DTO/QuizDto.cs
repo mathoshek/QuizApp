@@ -13,5 +13,6 @@ namespace Repository.DTO
         public int Time { get; set; }
         public double PassingScore { get; set; }
         public int NumQuestions { get; set; }
+        public int DomainId { get; set; }
     }
 }
