@@ -21,6 +21,35 @@ namespace QuizApp.Controllers
             return View();
         }
         
+        public ActionResult CreateDomain()
+        {
+            return View();
+        }
+
+        public ActionResult ViewDomains()
+        {
+            return View();
+        }
+
+        public ActionResult FirstPage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateDomain(Models.DomainModel domain)
+        {
+            if (domain.DomainName != null)
+            {
+
+            }
+            else
+            {
+
+            }
+            return View(domain);
+        }
+
         [HttpPost]
         public ActionResult Question(Models.QuestionModel question)
         {

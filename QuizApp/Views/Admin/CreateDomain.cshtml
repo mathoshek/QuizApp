@@ -1,0 +1,16 @@
+﻿@model QuizApp.Models.DomainModel
+@{
+    ViewBag.Title = "CreateDomain";
+}
+
+<div><h2>Creati un domeniu nou..</h2></div>
+<form name="formDomain" method="post" action="/Admin/CreateDomain">
+    <div>
+        @Html.LabelFor(d => d.DomainName)
+        @Html.TextBoxFor(d => d.DomainName)
+    </div>
+    <div>
+        <input id="btnSaveQuestion" type="submit" value="Salveaza" />  
+    </div>
+
+</form>

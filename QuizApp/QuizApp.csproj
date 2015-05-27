@@ -203,6 +203,7 @@
     <Compile Include="Models\ChallengeAcceptedEvent.cs" />
     <Compile Include="Models\ChallengeRejectedEvent.cs" />
     <Compile Include="Models\ChallengeResultEvent.cs" />
+    <Compile Include="Models\DomainModel.cs" />
     <Compile Include="Models\IQuizEvent.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\QuestionModel.cs" />
@@ -323,6 +324,9 @@
     <Content Include="Views\Home\AfterLogin.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Admin\CreateDomain.cshtml" />
+    <Content Include="Views\Admin\ViewDomains.cshtml" />
+    <Content Include="Views\Admin\FirstPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

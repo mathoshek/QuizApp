@@ -2,6 +2,9 @@
 @{
    ViewBag.Title = "Question";
 }
+@{
+    var domains = ViewBag.Faculties as List<Repository.User>;
+}
 
 <h2>Question</h2>
 
@@ -15,6 +18,18 @@
                 <ol>
                     <li>
                         <input id="btnSaveQuestion" type="submit" value="Salveaza" />    
+                    </li>
+                    <li>
+                       <label>Selectatii domeniul</label>
+                        <select name="IdFaculty" id="Faculties" style="width: 310px;
+                               height: 30px;">
+                            <option value="id1">domain2</option>
+                            <option value="id2">domain1</option>
+                            @*@foreach (var item in domains)
+                            {
+                                <option value="@item.Id" @(item.Id != null ? "selected" : String.Empty)>@item.Username</option>
+                            }*@
+                        </select>
                     </li>
                     <li>
                         @Html.LabelFor(q => q.QuestionText)
