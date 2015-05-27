@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "ViewDomains";
+}
+
+<h2>ViewDomains</h2>
+
+<div> <h1>Toate domeniile.....</h1></div>
+<div>
+    <input id="btnNewQuestion" type="button" value="Domeniu nou" onclick="@("window.location.href='" + @Url.Action("CreateDomain", "Admin") + "'");" />
+    <ul>
+        <li>
+            <a href="@Url.Action("Question")"> Primul domeniu </a>
+        </li>
+        <li>
+            <a href="@Url.Action("Question")"> Al doilea Domeniu </a>
+        </li>
+    </ul>
+</div>

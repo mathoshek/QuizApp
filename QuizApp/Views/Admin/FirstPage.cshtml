@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "FirstPage";
+}
+
+<h2>Prima Pagina</h2>
+
+<h1>Bine ai venit in aplicatia QuizzApp....!!!!!!!</h1>
+<div>
+    <input id="btnViewQuestion" type="button" value="Vizualizare Intrebari" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
+    <input id="btnViewDomains" type="button" value="Vizualizare Domenii" onclick="@("window.location.href='" + @Url.Action("ViewDomains", "Admin") + "'");" />
+    <input id="btnNewQuestion" type="button" value="Adauga Intrebare" onclick="@("window.location.href='" + @Url.Action("Question", "Admin") + "'");" />
+    <input id="btnCreateQuiz" type="button" value="Adauga Quiz" onclick="@("window.location.href='" + @Url.Action("CreateQuiz", "Admin") + "'");" />
+
+</div>

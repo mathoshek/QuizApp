@@ -12,6 +12,7 @@ namespace QuizApp.Models
         public string FirstAnswer { get; set; }
         public string SecondAnswer { get; set; }
         public string ThirdAnswer { get; set; }
+        public int DomainId { get; set; }
         public bool CorrectFirst { get; set; }
         public bool CorrectSecond { get; set; }
         public bool CorrectThird { get; set; }
@@ -21,7 +22,7 @@ namespace QuizApp.Models
 
         }
 
-        public QuestionModel(string text, string FirstAnswers, string secondsAnswer, string ThirdAnswers, bool correct, bool corrects, bool correctt)
+        public QuestionModel(string text, string FirstAnswers, string secondsAnswer, string ThirdAnswers, bool correct, bool corrects, bool correctt, int DomainId)
         {
             this.QuestionText = text;
             this.FirstAnswer = FirstAnswer;
@@ -30,6 +31,7 @@ namespace QuizApp.Models
             this.CorrectFirst = correct;
             this.CorrectSecond = corrects;
             this.CorrectThird = correctt;
+            this.DomainId = DomainId;
         }
     }
 }
