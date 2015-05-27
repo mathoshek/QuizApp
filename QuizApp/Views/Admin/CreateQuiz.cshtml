@@ -1,0 +1,49 @@
+﻿@model QuizApp.Models.CreateQuizModel
+@{
+    ViewBag.Title = "CreateQuiz";
+}
+
+<h2>CreateQuiz</h2>
+
+@using (Html.BeginForm("CreateQuiz", "Admin", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.Message != null)
+    {
+        <div style="border:2px solid red">
+            @ViewBag.Message;
+        </div>
+    }
+    <table>
+        <tr>
+            <td>@Html.LabelFor(u => u.QuizTitle)</td>
+            <td>@Html.TextBoxFor(u => u.QuizTitle)</td>
+            <td>@Html.ValidationMessageFor(u => u.QuizTitle)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(u => u.PassingScore)</td>
+            <td>@Html.TextBoxFor(u => u.PassingScore)</td>
+            <td>@Html.ValidationMessageFor(u => u.PassingScore)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(u => u.QuestionsNumber)</td>
+            <td>@Html.TextBoxFor(u => u.QuestionsNumber)</td>
+            <td>@Html.ValidationMessageFor(u => u.QuestionsNumber)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(u => u.Time)</td>
+            <td>@Html.TextBoxFor(u => u.Time)</td>
+            <td>@Html.ValidationMessageFor(u => u.Time)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Create" onclick="@("window.location.href='" + @Url.Action("AfterLogin", "Home") + "'");" />
+                <input type="submit" value="Register"  />
+            </td>
+            <td></td>
+        </tr>
+
+    </table>
+}

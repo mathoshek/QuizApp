@@ -36,6 +36,11 @@ namespace QuizApp.Controllers
             return View();
         }
 
+        public ActionResult CreateQuiz()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult CreateDomain(Models.DomainModel domain)
         {
@@ -62,6 +67,12 @@ namespace QuizApp.Controllers
 
             }
             return View(question);
+        }
+    
+        [HttpPost]
+        public ActionResult CreateQuiz(Models.CreateQuizModel quiz)
+        {
+            return View(quiz);
         }
     }
 }
