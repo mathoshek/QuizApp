@@ -14,17 +14,13 @@ namespace Repository
     
     public partial class Quiz
     {
-        public Quiz()
-        {
-            this.Quiz_QuizQuestion = new HashSet<Quiz_QuizQuestion>();
-        }
-    
         public int Id { get; set; }
         public string QuizTitle { get; set; }
         public int Time { get; set; }
         public double PassingScore { get; set; }
-        public int Questions { get; set; }
+        public int NumQuestions { get; set; }
+        public int DomainId { get; set; }
     
-        public virtual ICollection<Quiz_QuizQuestion> Quiz_QuizQuestion { get; set; }
+        public virtual QuizQuestionDomain QuizQuestionDomain { get; set; }
     }
 }

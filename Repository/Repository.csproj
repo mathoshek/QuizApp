@@ -78,7 +78,7 @@
     <Compile Include="QuizQuestion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Quiz_QuizQuestion.cs">
+    <Compile Include="QuizQuestionDomain.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">

@@ -16,5 +16,7 @@ namespace Repository.DTO
         public bool Answer2Correct { get; set; }
         public string Answer3Text { get; set; }
         public bool Answer3Correct { get; set; }
+        public int DomainId {get; set;}
+        public bool IsSingleChoice { get; set; }
     }
 }

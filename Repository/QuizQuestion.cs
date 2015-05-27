@@ -14,13 +14,10 @@ namespace Repository
     
     public partial class QuizQuestion
     {
-        public QuizQuestion()
-        {
-            this.Quiz_QuizQuestion = new HashSet<Quiz_QuizQuestion>();
-        }
-    
         public int Id { get; set; }
         public string QuestionText { get; set; }
+        public int DomainId { get; set; }
+        public bool IsSingleChoice { get; set; }
         public string Answer1Text { get; set; }
         public bool Answer1Correct { get; set; }
         public string Answer2Text { get; set; }
@@ -28,6 +25,6 @@ namespace Repository
         public string Answer3Text { get; set; }
         public bool Answer3Correct { get; set; }
     
-        public virtual ICollection<Quiz_QuizQuestion> Quiz_QuizQuestion { get; set; }
+        public virtual QuizQuestionDomain QuizQuestionDomain { get; set; }
     }
 }

@@ -12,13 +12,18 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     
-    public partial class Quiz_QuizQuestion
+    public partial class QuizQuestionDomain
     {
-        public int Id { get; set; }
-        public int QuizId { get; set; }
-        public int QuizQuestionId { get; set; }
+        public QuizQuestionDomain()
+        {
+            this.Quizs = new HashSet<Quiz>();
+            this.QuizQuestions = new HashSet<QuizQuestion>();
+        }
     
-        public virtual Quiz Quiz { get; set; }
-        public virtual QuizQuestion QuizQuestion { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<Quiz> Quizs { get; set; }
+        public virtual ICollection<QuizQuestion> QuizQuestions { get; set; }
     }
 }

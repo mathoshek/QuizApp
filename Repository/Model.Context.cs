@@ -26,8 +26,8 @@ namespace Repository
         }
     
         public virtual DbSet<Quiz> Quizs { get; set; }
-        public virtual DbSet<Quiz_QuizQuestion> Quiz_QuizQuestion { get; set; }
         public virtual DbSet<QuizQuestion> QuizQuestions { get; set; }
+        public virtual DbSet<QuizQuestionDomain> QuizQuestionDomains { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }
