@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "AssignQuizToUser";
+}
+
+<h2>AssignQuizToUser</h2>
+@using (Html.BeginForm("AssignQuiz", "Admin", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.Message != null)
+    {
+        <div style="border:2px solid red">
+            @ViewBag.Message;
+        </div>
+    }
+    <table>
+        <tr>
+            <td>
+                <select>
+                    <option value="1">User1</option>
+                </select>
+            </td>
+            <td>
+                <select>
+                    <option value="1">Quiz1</option>
+                </select>
+            </td>
+            <td>
+                <input type="submit" value="Asigneaza" />
+            </td>
+        </tr>
+    </table>
+}
+<ul>
+    <li>
+        <p>User1</p>
+        <ul>
+            <li>Quiz 1</li>
+            <li>Quiz 2</li>
+        </ul>
+    </li>
+</ul>
+

@@ -14,9 +14,16 @@ namespace Repository
     
     public partial class User
     {
+        public User()
+        {
+            this.User_QuizInstance = new HashSet<User_QuizInstance>();
+        }
+    
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Type { get; set; }
+    
+        public virtual ICollection<User_QuizInstance> User_QuizInstance { get; set; }
     }
 }

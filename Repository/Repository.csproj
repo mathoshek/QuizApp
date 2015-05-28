@@ -76,13 +76,22 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuizInstance.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="QuizQuestion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="QuizQuestionDomain.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="QuizQuestionInstance.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_QuizInstance.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>

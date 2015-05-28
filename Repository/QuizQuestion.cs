@@ -14,6 +14,11 @@ namespace Repository
     
     public partial class QuizQuestion
     {
+        public QuizQuestion()
+        {
+            this.QuizQuestionInstances = new HashSet<QuizQuestionInstance>();
+        }
+    
         public int Id { get; set; }
         public string QuestionText { get; set; }
         public int DomainId { get; set; }
@@ -26,5 +31,6 @@ namespace Repository
         public bool Answer3Correct { get; set; }
     
         public virtual QuizQuestionDomain QuizQuestionDomain { get; set; }
+        public virtual ICollection<QuizQuestionInstance> QuizQuestionInstances { get; set; }
     }
 }

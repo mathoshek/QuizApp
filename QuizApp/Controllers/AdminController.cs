@@ -68,5 +68,16 @@ namespace QuizApp.Controllers
         {
             return View(quiz);
         }
+
+        public ActionResult AssignQuiz()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AssignQuiz(Models.AssignQuizModel model)
+        {
+            return RedirectToAction("Index");
+        }
     }
 }

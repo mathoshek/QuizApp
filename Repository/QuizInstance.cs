@@ -12,21 +12,19 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     
-    public partial class Quiz
+    public partial class QuizInstance
     {
-        public Quiz()
+        public QuizInstance()
         {
-            this.QuizInstances = new HashSet<QuizInstance>();
+            this.User_QuizInstance = new HashSet<User_QuizInstance>();
         }
     
         public int Id { get; set; }
-        public string QuizTitle { get; set; }
-        public int Time { get; set; }
-        public double PassingScore { get; set; }
-        public int NumQuestions { get; set; }
-        public int DomainId { get; set; }
+        public int QuizId { get; set; }
+        public bool IsStarted { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
     
-        public virtual QuizQuestionDomain QuizQuestionDomain { get; set; }
-        public virtual ICollection<QuizInstance> QuizInstances { get; set; }
+        public virtual Quiz Quiz { get; set; }
+        public virtual ICollection<User_QuizInstance> User_QuizInstance { get; set; }
     }
 }
