@@ -276,5 +276,39 @@ namespace Repository
             }
             return list;
         }
+
+        public QuestionInstanceDto getQuestionInstance(int id)
+        {
+            QuizQuestionInstance qqi = ctx.QuizQuestionInstances.FirstOrDefault(x => x.Id == id);
+            if (qqi == null)
+                return null;
+
+            QuestionInstanceDto qidto = new QuestionInstanceDto();
+            qidto.Id = qqi.Id;
+            qidto.QuestionId = qqi.QuizQuestionId;
+            qidto.AnswerSaved = qqi.AnswerSaved;
+            qidto.Choice1 = qqi.Choice1;
+            qidto.Choice2 = qqi.Choice2;
+            qidto.Choice3 = qqi.Choice3;
+
+            return qidto;
+        }
+
+        public List<QuestionInstanceDto> getQuestionInstancesForQuizInstance(int id)
+        {
+            List<QuestionInstanceDto> list = new List<QuestionInstanceDto>();
+            foreach (var qqi in ctx.QuizQuestionInstances.Where(x => x.Id == id))
+            {
+                QuestionInstanceDto qidto = new QuestionInstanceDto();
+                qidto.Id = qqi.Id;
+                qidto.QuestionId = qqi.QuizQuestionId;
+                qidto.AnswerSaved = qqi.AnswerSaved;
+                qidto.Choice1 = qqi.Choice1;
+                qidto.Choice2 = qqi.Choice2;
+                qidto.Choice3 = qqi.Choice3;
+                list.Add(qidto);
+            }
+            return list;
+        }
     }
 }
