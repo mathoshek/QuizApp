@@ -1,5 +1,36 @@
-﻿@{
+﻿@model QuizApp.Models.CreateQuizModel
+@{
     ViewBag.Title = "Status";
 }
-
+@{
+    var status = ViewBag.Status as List<Repository.DTO.QuestionInstanceDto>;
+}
 <h2>Status</h2>
+
+@using (Html.BeginForm("Status", "Admin", FormMethod.Post))
+{
+
+
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.Message != null)
+    {
+        <div style="border:2px solid red">
+            @ViewBag.Message;
+        </div>
+    }
+    <label>Selectati domeniul</label>
+    <select name="DomainId" id="DomainId" style="width: 310px; height: 30px;">
+        @foreach (var item in status)
+        {
+            if(!item.AnswerSaved)
+            {
+                <option value="@item.Id" @(item.Id != null ? "selected" : String.Empty)>@item.QuestionId</option>
+            }
+            
+        }
+    </select>
+    <input type="submit" value="Create " />
+    <input id="btnHome" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
+
+}

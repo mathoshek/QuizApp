@@ -44,7 +44,7 @@
         <tr>
             <td></td>
             <td>
-                <input type="submit" value="Create " />
+                
 
             </td>
             <td></td>
@@ -57,4 +57,7 @@
             <option value="@item.Id" @(item.Id != null ? "selected" : String.Empty)>@item.Name</option>
         }
     </select>
+    <input type="submit" value="Create " />
+    <input id="btnHome" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
+                        
 }
