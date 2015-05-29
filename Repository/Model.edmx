@@ -6,24 +6,28 @@
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ModelStoreContainer">
-    <EntitySet Name="Quizs" EntityType="Model.Store.Quizs" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="QuizInstances" EntityType="Model.Store.QuizInstances" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="QuizQuestions" EntityType="Model.Store.QuizQuestions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="QuizQuestionDomains" EntityType="Model.Store.QuizQuestionDomains" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="QuizQuestionInstances" EntityType="Model.Store.QuizQuestionInstances" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Users" EntityType="Model.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="QuizQuestions" EntityType="Model.Store.QuizQuestions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Quizs" EntityType="Model.Store.Quizs" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="User_QuizInstance" EntityType="Model.Store.User_QuizInstance" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_Quiz_QuizQuestionDomain" Association="Model.Store.FK_Quiz_QuizQuestionDomain">
-      <End Role="QuizQuestionDomain" EntitySet="QuizQuestionDomains" />
-      <End Role="Quiz" EntitySet="Quizs" />
-    </AssociationSet>
+    <EntitySet Name="Users" EntityType="Model.Store.Users" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_QuizInstance_Quiz" Association="Model.Store.FK_QuizInstance_Quiz">
       <End Role="Quiz" EntitySet="Quizs" />
       <End Role="QuizInstance" EntitySet="QuizInstances" />
     </AssociationSet>
+    <AssociationSet Name="FK_QuizInstanceQuizQuestionInstance" Association="Model.Store.FK_QuizInstanceQuizQuestionInstance">
+      <End Role="QuizInstance" EntitySet="QuizInstances" />
+      <End Role="QuizQuestionInstance" EntitySet="QuizQuestionInstances" />
+    </AssociationSet>
     <AssociationSet Name="FK_User_QuizInstance_QuizInstance" Association="Model.Store.FK_User_QuizInstance_QuizInstance">
       <End Role="QuizInstance" EntitySet="QuizInstances" />
       <End Role="User_QuizInstance" EntitySet="User_QuizInstance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Quiz_QuizQuestionDomain" Association="Model.Store.FK_Quiz_QuizQuestionDomain">
+      <End Role="QuizQuestionDomain" EntitySet="QuizQuestionDomains" />
+      <End Role="Quiz" EntitySet="Quizs" />
     </AssociationSet>
     <AssociationSet Name="FK_QuizQuestion_QuizQuestionDomain" Association="Model.Store.FK_QuizQuestion_QuizQuestionDomain">
       <End Role="QuizQuestionDomain" EntitySet="QuizQuestionDomains" />
@@ -38,17 +42,6 @@
       <End Role="User_QuizInstance" EntitySet="User_QuizInstance" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Quizs">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="QuizTitle" Type="varchar(max)" Nullable="false" />
-    <Property Name="Time" Type="int" Nullable="false" />
-    <Property Name="PassingScore" Type="float" Nullable="false" />
-    <Property Name="NumQuestions" Type="int" Nullable="false" />
-    <Property Name="DomainId" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="QuizInstances">
     <Key>
       <PropertyRef Name="Id" />
@@ -57,21 +50,6 @@
     <Property Name="QuizId" Type="int" Nullable="false" />
     <Property Name="IsStarted" Type="bit" Nullable="false" />
     <Property Name="StartDate" Type="datetime" Nullable="true" />
-  </EntityType>
-  <EntityType Name="QuizQuestions">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="QuestionText" Type="varchar(max)" Nullable="false" />
-    <Property Name="DomainId" Type="int" Nullable="false" />
-    <Property Name="IsSingleChoice" Type="bit" Nullable="false" />
-    <Property Name="Answer1Text" Type="varchar(max)" Nullable="false" />
-    <Property Name="Answer1Correct" Type="bit" Nullable="false" />
-    <Property Name="Answer2Text" Type="varchar(max)" Nullable="false" />
-    <Property Name="Answer2Correct" Type="bit" Nullable="false" />
-    <Property Name="Answer3Text" Type="varchar(max)" Nullable="false" />
-    <Property Name="Answer3Correct" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="QuizQuestionDomains">
     <Key>
@@ -90,6 +68,41 @@
     <Property Name="Choice1" Type="bit" Nullable="false" />
     <Property Name="Choice2" Type="bit" Nullable="false" />
     <Property Name="Choice3" Type="bit" Nullable="false" />
+    <Property Name="QuizInstanceId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="QuizQuestions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QuestionText" Type="varchar(max)" Nullable="false" />
+    <Property Name="DomainId" Type="int" Nullable="false" />
+    <Property Name="IsSingleChoice" Type="bit" Nullable="false" />
+    <Property Name="Answer1Text" Type="varchar(max)" Nullable="false" />
+    <Property Name="Answer1Correct" Type="bit" Nullable="false" />
+    <Property Name="Answer2Text" Type="varchar(max)" Nullable="false" />
+    <Property Name="Answer2Correct" Type="bit" Nullable="false" />
+    <Property Name="Answer3Text" Type="varchar(max)" Nullable="false" />
+    <Property Name="Answer3Correct" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Quizs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QuizTitle" Type="varchar(max)" Nullable="false" />
+    <Property Name="Time" Type="int" Nullable="false" />
+    <Property Name="PassingScore" Type="float" Nullable="false" />
+    <Property Name="NumQuestions" Type="int" Nullable="false" />
+    <Property Name="DomainId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_QuizInstance">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="QuizInstanceId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -100,26 +113,6 @@
     <Property Name="Password" Type="varchar(max)" Nullable="false" />
     <Property Name="Type" Type="varchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="User_QuizInstance">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
-    <Property Name="QuizInstanceId" Type="int" Nullable="false" />
-  </EntityType>
-  <Association Name="FK_Quiz_QuizQuestionDomain">
-    <End Role="QuizQuestionDomain" Type="Model.Store.QuizQuestionDomains" Multiplicity="1" />
-    <End Role="Quiz" Type="Model.Store.Quizs" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="QuizQuestionDomain">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Quiz">
-        <PropertyRef Name="DomainId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_QuizInstance_Quiz">
     <End Role="Quiz" Type="Model.Store.Quizs" Multiplicity="1" />
     <End Role="QuizInstance" Type="Model.Store.QuizInstances" Multiplicity="*" />
@@ -132,6 +125,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_QuizInstanceQuizQuestionInstance">
+    <End Role="QuizInstance" Type="Model.Store.QuizInstances" Multiplicity="1" />
+    <End Role="QuizQuestionInstance" Type="Model.Store.QuizQuestionInstances" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuizInstance">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="QuizQuestionInstance">
+        <PropertyRef Name="QuizInstanceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_QuizInstance_QuizInstance">
     <End Role="QuizInstance" Type="Model.Store.QuizInstances" Multiplicity="1" />
     <End Role="User_QuizInstance" Type="Model.Store.User_QuizInstance" Multiplicity="*" />
@@ -141,6 +146,18 @@
       </Principal>
       <Dependent Role="User_QuizInstance">
         <PropertyRef Name="QuizInstanceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Quiz_QuizQuestionDomain">
+    <End Role="QuizQuestionDomain" Type="Model.Store.QuizQuestionDomains" Multiplicity="1" />
+    <End Role="Quiz" Type="Model.Store.Quizs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuizQuestionDomain">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Quiz">
+        <PropertyRef Name="DomainId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -185,24 +202,28 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Quizs" EntityType="Model.Quiz" />
           <EntitySet Name="QuizInstances" EntityType="Model.QuizInstance" />
-          <EntitySet Name="QuizQuestions" EntityType="Model.QuizQuestion" />
           <EntitySet Name="QuizQuestionDomains" EntityType="Model.QuizQuestionDomain" />
           <EntitySet Name="QuizQuestionInstances" EntityType="Model.QuizQuestionInstance" />
-          <EntitySet Name="Users" EntityType="Model.User" />
+          <EntitySet Name="QuizQuestions" EntityType="Model.QuizQuestion" />
+          <EntitySet Name="Quizs" EntityType="Model.Quiz" />
           <EntitySet Name="User_QuizInstance" EntityType="Model.User_QuizInstance" />
-          <AssociationSet Name="FK_Quiz_QuizQuestionDomain" Association="Model.FK_Quiz_QuizQuestionDomain">
-            <End Role="QuizQuestionDomain" EntitySet="QuizQuestionDomains" />
-            <End Role="Quiz" EntitySet="Quizs" />
-          </AssociationSet>
+          <EntitySet Name="Users" EntityType="Model.User" />
           <AssociationSet Name="FK_QuizInstance_Quiz" Association="Model.FK_QuizInstance_Quiz">
             <End Role="Quiz" EntitySet="Quizs" />
             <End Role="QuizInstance" EntitySet="QuizInstances" />
           </AssociationSet>
+          <AssociationSet Name="FK_QuizInstanceQuizQuestionInstance" Association="Model.FK_QuizInstanceQuizQuestionInstance">
+            <End Role="QuizInstance" EntitySet="QuizInstances" />
+            <End Role="QuizQuestionInstance" EntitySet="QuizQuestionInstances" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_QuizInstance_QuizInstance" Association="Model.FK_User_QuizInstance_QuizInstance">
             <End Role="QuizInstance" EntitySet="QuizInstances" />
             <End Role="User_QuizInstance" EntitySet="User_QuizInstance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quiz_QuizQuestionDomain" Association="Model.FK_Quiz_QuizQuestionDomain">
+            <End Role="QuizQuestionDomain" EntitySet="QuizQuestionDomains" />
+            <End Role="Quiz" EntitySet="Quizs" />
           </AssociationSet>
           <AssociationSet Name="FK_QuizQuestion_QuizQuestionDomain" Association="Model.FK_QuizQuestion_QuizQuestionDomain">
             <End Role="QuizQuestionDomain" EntitySet="QuizQuestionDomains" />
@@ -217,19 +238,6 @@
             <End Role="User_QuizInstance" EntitySet="User_QuizInstance" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Quiz">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuizTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Time" Type="Int32" Nullable="false" />
-          <Property Name="PassingScore" Type="Double" Nullable="false" />
-          <Property Name="NumQuestions" Type="Int32" Nullable="false" />
-          <Property Name="DomainId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="QuizQuestionDomain" Relationship="Model.FK_Quiz_QuizQuestionDomain" FromRole="Quiz" ToRole="QuizQuestionDomain" />
-          <NavigationProperty Name="QuizInstances" Relationship="Model.FK_QuizInstance_Quiz" FromRole="Quiz" ToRole="QuizInstance" />
-        </EntityType>
         <EntityType Name="QuizInstance">
           <Key>
             <PropertyRef Name="Id" />
@@ -237,26 +245,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QuizId" Type="Int32" Nullable="false" />
           <Property Name="IsStarted" Type="Boolean" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Quiz" Relationship="Model.FK_QuizInstance_Quiz" FromRole="QuizInstance" ToRole="Quiz" />
+          <NavigationProperty Name="QuizQuestionInstances" Relationship="Model.FK_QuizInstanceQuizQuestionInstance" FromRole="QuizInstance" ToRole="QuizQuestionInstance" />
           <NavigationProperty Name="User_QuizInstance" Relationship="Model.FK_User_QuizInstance_QuizInstance" FromRole="QuizInstance" ToRole="User_QuizInstance" />
-        </EntityType>
-        <EntityType Name="QuizQuestion">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuestionText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DomainId" Type="Int32" Nullable="false" />
-          <Property Name="IsSingleChoice" Type="Boolean" Nullable="false" />
-          <Property Name="Answer1Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Answer1Correct" Type="Boolean" Nullable="false" />
-          <Property Name="Answer2Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Answer2Correct" Type="Boolean" Nullable="false" />
-          <Property Name="Answer3Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Answer3Correct" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="QuizQuestionDomain" Relationship="Model.FK_QuizQuestion_QuizQuestionDomain" FromRole="QuizQuestion" ToRole="QuizQuestionDomain" />
-          <NavigationProperty Name="QuizQuestionInstances" Relationship="Model.FK_QuizQuestionInstance_QuizQuestion" FromRole="QuizQuestion" ToRole="QuizQuestionInstance" />
         </EntityType>
         <EntityType Name="QuizQuestionDomain">
           <Key>
@@ -277,17 +269,39 @@
           <Property Name="Choice1" Type="Boolean" Nullable="false" />
           <Property Name="Choice2" Type="Boolean" Nullable="false" />
           <Property Name="Choice3" Type="Boolean" Nullable="false" />
+          <Property Name="QuizInstanceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QuizInstance" Relationship="Model.FK_QuizInstanceQuizQuestionInstance" FromRole="QuizQuestionInstance" ToRole="QuizInstance" />
           <NavigationProperty Name="QuizQuestion" Relationship="Model.FK_QuizQuestionInstance_QuizQuestion" FromRole="QuizQuestionInstance" ToRole="QuizQuestion" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="QuizQuestion">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="User_QuizInstance" Relationship="Model.FK_User_QuizInstance_User" FromRole="User" ToRole="User_QuizInstance" />
+          <Property Name="QuestionText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DomainId" Type="Int32" Nullable="false" />
+          <Property Name="IsSingleChoice" Type="Boolean" Nullable="false" />
+          <Property Name="Answer1Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Answer1Correct" Type="Boolean" Nullable="false" />
+          <Property Name="Answer2Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Answer2Correct" Type="Boolean" Nullable="false" />
+          <Property Name="Answer3Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Answer3Correct" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="QuizQuestionDomain" Relationship="Model.FK_QuizQuestion_QuizQuestionDomain" FromRole="QuizQuestion" ToRole="QuizQuestionDomain" />
+          <NavigationProperty Name="QuizQuestionInstances" Relationship="Model.FK_QuizQuestionInstance_QuizQuestion" FromRole="QuizQuestion" ToRole="QuizQuestionInstance" />
+        </EntityType>
+        <EntityType Name="Quiz">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuizTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="Int32" Nullable="false" />
+          <Property Name="PassingScore" Type="Double" Nullable="false" />
+          <Property Name="NumQuestions" Type="Int32" Nullable="false" />
+          <Property Name="DomainId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QuizInstances" Relationship="Model.FK_QuizInstance_Quiz" FromRole="Quiz" ToRole="QuizInstance" />
+          <NavigationProperty Name="QuizQuestionDomain" Relationship="Model.FK_Quiz_QuizQuestionDomain" FromRole="Quiz" ToRole="QuizQuestionDomain" />
         </EntityType>
         <EntityType Name="User_QuizInstance">
           <Key>
@@ -299,18 +313,16 @@
           <NavigationProperty Name="QuizInstance" Relationship="Model.FK_User_QuizInstance_QuizInstance" FromRole="User_QuizInstance" ToRole="QuizInstance" />
           <NavigationProperty Name="User" Relationship="Model.FK_User_QuizInstance_User" FromRole="User_QuizInstance" ToRole="User" />
         </EntityType>
-        <Association Name="FK_Quiz_QuizQuestionDomain">
-          <End Type="Model.QuizQuestionDomain" Role="QuizQuestionDomain" Multiplicity="1" />
-          <End Type="Model.Quiz" Role="Quiz" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QuizQuestionDomain">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Quiz">
-              <PropertyRef Name="DomainId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User_QuizInstance" Relationship="Model.FK_User_QuizInstance_User" FromRole="User" ToRole="User_QuizInstance" />
+        </EntityType>
         <Association Name="FK_QuizInstance_Quiz">
           <End Type="Model.Quiz" Role="Quiz" Multiplicity="1" />
           <End Type="Model.QuizInstance" Role="QuizInstance" Multiplicity="*" />
@@ -323,6 +335,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_QuizInstanceQuizQuestionInstance">
+          <End Type="Model.QuizInstance" Role="QuizInstance" Multiplicity="1" />
+          <End Type="Model.QuizQuestionInstance" Role="QuizQuestionInstance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizInstance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuizQuestionInstance">
+              <PropertyRef Name="QuizInstanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_QuizInstance_QuizInstance">
           <End Type="Model.QuizInstance" Role="QuizInstance" Multiplicity="1" />
           <End Type="Model.User_QuizInstance" Role="User_QuizInstance" Multiplicity="*" />
@@ -332,6 +356,18 @@
             </Principal>
             <Dependent Role="User_QuizInstance">
               <PropertyRef Name="QuizInstanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quiz_QuizQuestionDomain">
+          <End Type="Model.QuizQuestionDomain" Role="QuizQuestionDomain" Multiplicity="1" />
+          <End Type="Model.Quiz" Role="Quiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizQuestionDomain">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Quiz">
+              <PropertyRef Name="DomainId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -377,18 +413,6 @@
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
-    <EntitySetMapping Name="Quizs">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Quiz)">
-        <MappingFragment StoreEntitySet="Quizs">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="QuizTitle" ColumnName="QuizTitle" />
-          <ScalarProperty Name="Time" ColumnName="Time" />
-          <ScalarProperty Name="PassingScore" ColumnName="PassingScore" />
-          <ScalarProperty Name="NumQuestions" ColumnName="NumQuestions" />
-          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="QuizInstances">
       <EntityTypeMapping TypeName="IsTypeOf(Model.QuizInstance)">
         <MappingFragment StoreEntitySet="QuizInstances">
@@ -396,22 +420,6 @@
           <ScalarProperty Name="QuizId" ColumnName="QuizId" />
           <ScalarProperty Name="IsStarted" ColumnName="IsStarted" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="QuizQuestions">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.QuizQuestion)">
-        <MappingFragment StoreEntitySet="QuizQuestions">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
-          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
-          <ScalarProperty Name="IsSingleChoice" ColumnName="IsSingleChoice" />
-          <ScalarProperty Name="Answer1Text" ColumnName="Answer1Text" />
-          <ScalarProperty Name="Answer1Correct" ColumnName="Answer1Correct" />
-          <ScalarProperty Name="Answer2Text" ColumnName="Answer2Text" />
-          <ScalarProperty Name="Answer2Correct" ColumnName="Answer2Correct" />
-          <ScalarProperty Name="Answer3Text" ColumnName="Answer3Text" />
-          <ScalarProperty Name="Answer3Correct" ColumnName="Answer3Correct" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -432,6 +440,44 @@
           <ScalarProperty Name="Choice1" ColumnName="Choice1" />
           <ScalarProperty Name="Choice2" ColumnName="Choice2" />
           <ScalarProperty Name="Choice3" ColumnName="Choice3" />
+          <ScalarProperty Name="QuizInstanceId" ColumnName="QuizInstanceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuizQuestions">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.QuizQuestion)">
+        <MappingFragment StoreEntitySet="QuizQuestions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+          <ScalarProperty Name="IsSingleChoice" ColumnName="IsSingleChoice" />
+          <ScalarProperty Name="Answer1Text" ColumnName="Answer1Text" />
+          <ScalarProperty Name="Answer1Correct" ColumnName="Answer1Correct" />
+          <ScalarProperty Name="Answer2Text" ColumnName="Answer2Text" />
+          <ScalarProperty Name="Answer2Correct" ColumnName="Answer2Correct" />
+          <ScalarProperty Name="Answer3Text" ColumnName="Answer3Text" />
+          <ScalarProperty Name="Answer3Correct" ColumnName="Answer3Correct" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Quizs">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Quiz)">
+        <MappingFragment StoreEntitySet="Quizs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="QuizTitle" ColumnName="QuizTitle" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="PassingScore" ColumnName="PassingScore" />
+          <ScalarProperty Name="NumQuestions" ColumnName="NumQuestions" />
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_QuizInstance">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.User_QuizInstance)">
+        <MappingFragment StoreEntitySet="User_QuizInstance">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="QuizInstanceId" ColumnName="QuizInstanceId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -442,15 +488,6 @@
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Type" ColumnName="Type" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="User_QuizInstance">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.User_QuizInstance)">
-        <MappingFragment StoreEntitySet="User_QuizInstance">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="QuizInstanceId" ColumnName="QuizInstanceId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

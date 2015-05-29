@@ -236,7 +236,7 @@ namespace Repository
 
         // --------
 
-        public void AddQuizInstanceToUser(string username, QuizInstanceDto quizInstanceDto)
+        public QuizInstanceDto AddQuizInstanceToUser(string username, QuizInstanceDto quizInstanceDto)
         {
             QuizInstance qi = new QuizInstance();
             qi.IsStarted = quizInstanceDto.IsStarted;
@@ -249,6 +249,14 @@ namespace Repository
             uqi.UserId = ctx.Users.FirstOrDefault(x => x.Username == username).Id;
             ctx.User_QuizInstance.Add(uqi);
             ctx.SaveChanges();
+
+            QuizInstanceDto qidto = new QuizInstanceDto();
+            qidto.Id = qi.Id;
+            qidto.IsStarted = qi.IsStarted;
+            qidto.QuizId = qi.QuizId;
+            qidto.StartTime = qi.StartDate;
+
+            return qidto;
         }
 
         public bool UserHasQuiz(string username, int quizId)
@@ -297,7 +305,7 @@ namespace Repository
         public List<QuestionInstanceDto> getQuestionInstancesForQuizInstance(int id)
         {
             List<QuestionInstanceDto> list = new List<QuestionInstanceDto>();
-            foreach (var qqi in ctx.QuizQuestionInstances.Where(x => x.Id == id))
+            foreach (var qqi in ctx.QuizQuestionInstances.Where(x => x.QuizInstanceId == id))
             {
                 QuestionInstanceDto qidto = new QuestionInstanceDto();
                 qidto.Id = qqi.Id;
@@ -309,6 +317,20 @@ namespace Repository
                 list.Add(qidto);
             }
             return list;
+        }
+
+        public void addQuestionInstance(QuestionInstanceDto questionInstanceDto)
+        {
+            QuizQuestionInstance qqi = new QuizQuestionInstance();
+            qqi.QuizQuestionId = questionInstanceDto.QuestionId;
+            qqi.AnswerSaved = questionInstanceDto.AnswerSaved;
+            qqi.QuizInstanceId = questionInstanceDto.QuizInstanceId;
+            qqi.Choice1 = questionInstanceDto.Choice1;
+            qqi.Choice2 = questionInstanceDto.Choice2;
+            qqi.Choice3 = questionInstanceDto.Choice3;
+
+            ctx.QuizQuestionInstances.Add(qqi);
+            ctx.SaveChanges();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Repository
         public int NumQuestions { get; set; }
         public int DomainId { get; set; }
     
-        public virtual QuizQuestionDomain QuizQuestionDomain { get; set; }
         public virtual ICollection<QuizInstance> QuizInstances { get; set; }
+        public virtual QuizQuestionDomain QuizQuestionDomain { get; set; }
     }
 }
