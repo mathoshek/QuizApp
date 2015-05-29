@@ -9,7 +9,7 @@ namespace QuizApp.Models
     public class AssignQuizModel
     {
         [Required]
-        public int UserId { get; set; }
+        public string Username { get; set; }
 
         [Required]
         public int QuizId { get; set; }

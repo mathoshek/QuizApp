@@ -233,5 +233,82 @@ namespace Repository
 
             return questionDomainDto;
         }
+
+        // --------
+
+        public void AddQuizInstanceToUser(string username, QuizInstanceDto quizInstanceDto)
+        {
+            QuizInstance qi = new QuizInstance();
+            qi.IsStarted = quizInstanceDto.IsStarted;
+            qi.QuizId = quizInstanceDto.QuizId;
+            qi = ctx.QuizInstances.Add(qi);
+            ctx.SaveChanges();
+
+            User_QuizInstance uqi = new User_QuizInstance();
+            uqi.QuizInstanceId = qi.Id;
+            uqi.UserId = ctx.Users.FirstOrDefault(x => x.Username == username).Id;
+            ctx.User_QuizInstance.Add(uqi);
+            ctx.SaveChanges();
+        }
+
+        public bool UserHasQuiz(string username, int quizId)
+        {
+            User u = ctx.Users.FirstOrDefault(x => x.Username == username);
+            Quiz q = ctx.Quizs.FirstOrDefault(x => x.Id == quizId);
+
+            return ctx.User_QuizInstance.FirstOrDefault(x => x.UserId == u.Id && ctx.QuizInstances.FirstOrDefault(y => y.Id == x.QuizInstanceId).QuizId == q.Id) != null;
+        }
+
+        public List<QuizInstanceDto> GetQuizInstancesForUser(string username)
+        {
+            User u = ctx.Users.FirstOrDefault(x => x.Username == username);
+            List<QuizInstanceDto> list = new List<QuizInstanceDto>();
+
+            foreach (var mapping in ctx.User_QuizInstance.Where(x => x.UserId == u.Id))
+            {
+                QuizInstance qi = ctx.QuizInstances.FirstOrDefault(x => x.Id == mapping.QuizInstanceId);
+                QuizInstanceDto dto = new QuizInstanceDto();
+                dto.Id = qi.Id;
+                dto.IsStarted = qi.IsStarted;
+                dto.QuizId = qi.QuizId;
+                dto.StartTime = qi.StartDate;
+                list.Add(dto);
+            }
+            return list;
+        }
+
+        public QuestionInstanceDto getQuestionInstance(int id)
+        {
+            QuizQuestionInstance qqi = ctx.QuizQuestionInstances.FirstOrDefault(x => x.Id == id);
+            if (qqi == null)
+                return null;
+
+            QuestionInstanceDto qidto = new QuestionInstanceDto();
+            qidto.Id = qqi.Id;
+            qidto.QuestionId = qqi.QuizQuestionId;
+            qidto.AnswerSaved = qqi.AnswerSaved;
+            qidto.Choice1 = qqi.Choice1;
+            qidto.Choice2 = qqi.Choice2;
+            qidto.Choice3 = qqi.Choice3;
+
+            return qidto;
+        }
+
+        public List<QuestionInstanceDto> getQuestionInstancesForQuizInstance(int id)
+        {
+            List<QuestionInstanceDto> list = new List<QuestionInstanceDto>();
+            foreach (var qqi in ctx.QuizQuestionInstances.Where(x => x.Id == id))
+            {
+                QuestionInstanceDto qidto = new QuestionInstanceDto();
+                qidto.Id = qqi.Id;
+                qidto.QuestionId = qqi.QuizQuestionId;
+                qidto.AnswerSaved = qqi.AnswerSaved;
+                qidto.Choice1 = qqi.Choice1;
+                qidto.Choice2 = qqi.Choice2;
+                qidto.Choice3 = qqi.Choice3;
+                list.Add(qidto);
+            }
+            return list;
+        }
     }
 }

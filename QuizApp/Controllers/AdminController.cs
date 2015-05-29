@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
+using Repository.DTO;
+using System.Collections;
 
 
 namespace QuizApp.Controllers
@@ -13,7 +15,6 @@ namespace QuizApp.Controllers
         Repository.QuizAppRepo repository = new Repository.QuizAppRepo();
         public ActionResult Index()
         {
-            ViewBag.Questions = repository.getQuizQuestions();
             return View();
         }
 
@@ -34,8 +35,9 @@ namespace QuizApp.Controllers
             return View();
         }
 
-        public ActionResult FirstPage()
+        public ActionResult AllQuestions()
         {
+            ViewBag.Questions = repository.getQuizQuestions();
             return View();
         }
 
@@ -79,13 +81,50 @@ namespace QuizApp.Controllers
 
         public ActionResult AssignQuiz()
         {
+            ViewBag.Users = repository.getUsers();
+            ViewBag.Quizes = repository.getQuizes();
+            IDictionary<string, List<string>> quizInstances = new Dictionary<string, List<string>>();
+            foreach (var user in repository.getUsers())
+            {
+                List<string> list = new List<string>();
+                foreach (var quizInstanceDto in repository.GetQuizInstancesForUser(user.Username))
+                {
+                    list.Add(repository.getQuiz(quizInstanceDto.QuizId).QuizTitle);
+                }
+                quizInstances[user.Username] = list;
+            }
+            ViewBag.QuizInstances = quizInstances;
+
             return View();
         }
 
         [HttpPost]
         public ActionResult AssignQuiz(Models.AssignQuizModel model)
         {
-            return RedirectToAction("Index");
+            ViewBag.Users = repository.getUsers();
+            ViewBag.Quizes = repository.getQuizes();
+            IDictionary<string, List<QuizInstanceDto>> quizInstances = new Dictionary<string, List<QuizInstanceDto>>();
+            foreach (var user in repository.getUsers())
+            {
+                quizInstances[user.Username] = repository.GetQuizInstancesForUser(user.Username);
+            }
+            ViewBag.QuizInstances = quizInstances;
+
+            if (repository.UserHasQuiz(model.Username, model.QuizId))
+            {
+                ViewBag.Message = "User already has this quiz assigned";
+                return View();
+            }
+
+            // TODO: adauga random intrebari;
+
+            QuizInstanceDto qi = new QuizInstanceDto();
+            qi.IsStarted = false;
+            qi.QuizId = model.QuizId;
+
+            repository.AddQuizInstanceToUser(model.Username, qi);
+
+            return View();
         }
     }
 }

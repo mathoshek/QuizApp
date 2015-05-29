@@ -1,6 +1,13 @@
 ﻿@{
     ViewBag.Title = "AssignQuizToUser";
+    var users = ViewBag.Users as System.Collections.Generic.List<Repository.DTO.UserDto>;
+    var quizes = ViewBag.Quizes as List<Repository.DTO.QuizDto>;
+    var quizInstances = ViewBag.QuizInstances as Dictionary<string, List<string>>;
 }
+
+<div>
+    <input id="btnNewQuestion" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
+</div>
 
 <h2>AssignQuizToUser</h2>
 @using (Html.BeginForm("AssignQuiz", "Admin", FormMethod.Post))
@@ -16,13 +23,19 @@
     <table>
         <tr>
             <td>
-                <select>
-                    <option value="1">User1</option>
+                <select name ="Username" id="Username">
+                    @foreach (Repository.DTO.UserDto user in users)
+                    {
+                        <option value="@user.Username">@user.Username</option>
+                    }
                 </select>
             </td>
             <td>
-                <select>
-                    <option value="1">Quiz1</option>
+                <select name="QuizId" id="QuizId">
+                    @foreach (var quiz in quizes)
+                    {
+                        <option value="@quiz.Id">@quiz.QuizTitle</option>
+                    }
                 </select>
             </td>
             <td>
@@ -32,12 +45,16 @@
     </table>
 }
 <ul>
-    <li>
-        <p>User1</p>
+    @foreach (var item in quizInstances)
+    {
+        <li>
+        <p>@item.Key</p>
         <ul>
-            <li>Quiz 1</li>
-            <li>Quiz 2</li>
+            @foreach (var quiz in item.Value)
+            {
+                <li>@quiz</li>
+            }
         </ul>
     </li>
+    }
 </ul>
-

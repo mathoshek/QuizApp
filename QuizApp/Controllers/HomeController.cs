@@ -12,6 +12,16 @@ namespace QuizApp.Controllers
     {
         private QuizAppRepo repo = new QuizAppRepo();
 
+        public ActionResult SustainQuiz()
+        {
+            return View();
+        }
+
+        public ActionResult Status()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             var user = Session["LoggedUser"] as UserDto;
@@ -24,6 +34,7 @@ namespace QuizApp.Controllers
 
         public ActionResult UserLoggedIn()
         {
+            ViewBag.quizForUser = repo.getQuizes();
             return View();
         }
 
