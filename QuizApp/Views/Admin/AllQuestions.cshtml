@@ -1,0 +1,20 @@
+@{
+    ViewBag.Title = "Admin";
+}
+@{
+    var questions = ViewBag.Questions as List<Repository.DTO.QuizQuestionDto>;
+}
+
+<h2>Admin</h2>
+
+    <div> <h1>Toate intrebarile.....</h1></div>
+    <div>
+        <input id="btnNewQuestion" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
+        <input id="btnHome" type="button" value="Intrebare noua" onclick="@("window.location.href='" + @Url.Action("Question", "Admin") + "'");" />
+        <ul>
+            @foreach (var item in questions)
+            {
+                <li>@item.QuestionText</li>
+            }
+        </ul>
+    </div>

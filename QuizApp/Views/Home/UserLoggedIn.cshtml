@@ -2,4 +2,19 @@
     ViewBag.Title = "Sustine Quiz";
 }
 
-<h2>Sustine Quiz</h2>
+@{
+      var quizForuser = ViewBag.quizForUser as List<Repository.DTO.QuizDto>;
+
+}
+
+<h2>Sustine Quiz-uri</h2>
+
+<ul>
+     @foreach (var item in quizForuser)
+     {
+      <li>
+          <a href="/Home/SustainQuiz"> @item.QuizTitle </a>
+      </li>
+     }
+    
+</ul>

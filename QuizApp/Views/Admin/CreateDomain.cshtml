@@ -6,11 +6,13 @@
 <div><h2>Creati un domeniu nou..</h2></div>
 <form name="formDomain" method="post" action="/Admin/CreateDomain">
     <div>
+        <input id="btnHome" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
+        <input id="btnSaveQuestion" type="submit" value="Salveaza" />
+    </div>
+    <div>
         @Html.LabelFor(d => d.DomainName)
         @Html.TextBoxFor(d => d.DomainName)
     </div>
-    <div>
-        <input id="btnSaveQuestion" type="submit" value="Salveaza" />  
-    </div>
+
 
 </form>

@@ -15,7 +15,6 @@ namespace QuizApp.Controllers
         Repository.QuizAppRepo repository = new Repository.QuizAppRepo();
         public ActionResult Index()
         {
-            ViewBag.Questions = repository.getQuizQuestions();
             return View();
         }
 
@@ -36,8 +35,9 @@ namespace QuizApp.Controllers
             return View();
         }
 
-        public ActionResult FirstPage()
+        public ActionResult AllQuestions()
         {
+            ViewBag.Questions = repository.getQuizQuestions();
             return View();
         }
 

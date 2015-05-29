@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "SustainQuiz";
+}
+
+<h2>SustainQuiz</h2>
+<div>
+    <input id="btnHome" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");" />
+    <input id="btnSkipQuestion" type="submit" value="Skip" />
+    <input id="btnNextQuestion" type="submit" value="Next" />
+    <input id="btnStatusQuiz" type="button" value="Status" onclick="@("window.location.href='" + @Url.Action("Status", "Home") + "'");" />  
+ </div>

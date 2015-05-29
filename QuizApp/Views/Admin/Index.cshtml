@@ -1,19 +1,14 @@
-@{
-    ViewBag.Title = "Admin";
-}
-@{
-    var questions = ViewBag.Questions as List<Repository.DTO.QuizQuestionDto>;
+﻿@{
+    ViewBag.Title = "FirstPage";
 }
 
-<h2>Admin</h2>
+<h2>Prima Pagina</h2>
 
-    <div> <h1>Toate intrebarile.....</h1></div>
-    <div>
-        <input id="btnNewQuestion" type="button" value="Intrebare noua" onclick="@("window.location.href='" + @Url.Action("Question", "Admin") + "'");" />
-        <ul>
-            @foreach (var item in questions)
-            {
-                <li>@item.QuestionText</li>
-            }
-        </ul>
-    </div>
+<h1>Bine ai venit in aplicatia QuizzApp....!!!!!!!</h1>
+<div>
+    <input id="btnViewQuestion" type="button" value="Vizualizare Intrebari" onclick="@("window.location.href='" + @Url.Action("AllQuestions", "Admin") + "'");" />
+    <input id="btnViewDomains" type="button" value="Vizualizare Domenii" onclick="@("window.location.href='" + @Url.Action("ViewDomains", "Admin") + "'");" />
+    <input id="btnNewQuestion" type="button" value="Adauga Intrebare" onclick="@("window.location.href='" + @Url.Action("Question", "Admin") + "'");" />
+    <input id="btnCreateQuiz" type="button" value="Adauga Quiz" onclick="@("window.location.href='" + @Url.Action("CreateQuiz", "Admin") + "'");" />
+    <input id="btnAssignQuiz" type="button" value="Asigneaza Quiz" onclick="@("window.location.href='" + @Url.Action("AssignQuiz", "Admin") + "'");" />
+</div>
