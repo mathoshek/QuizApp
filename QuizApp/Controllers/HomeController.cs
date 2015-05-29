@@ -14,6 +14,8 @@ namespace QuizApp.Controllers
 
         public ActionResult SustainQuiz()
         {
+            int id;
+            bool res = Int32.TryParse(Session["QuizId"].ToString(),out id);
             return View();
         }
 
@@ -38,7 +40,18 @@ namespace QuizApp.Controllers
 
         public ActionResult UserLoggedIn()
         {
-            ViewBag.quizForUser = repo.getQuizes();
+            UserDto user =  (UserDto)Session["LoggedUser"];
+           /* List<QuizDto> quizes = new List<QuizDto>();
+            List<Repository.DTO.QuizInstanceDto> quizInstances = new List<QuizInstanceDto>();
+            quizInstances = repo.GetQuizInstancesForUser(user.Username);
+            foreach(var item in quizInstances)
+            {
+                QuizDto quiz = new QuizDto();
+                quiz = repo.getQuiz(item.Id);
+                quizes.Add(quiz);
+            }
+            ViewBag.quizForuser = quizes;
+            ViewBag.quzInstancesId = quizInstances;*/
             return View();
         }
 

@@ -14,5 +14,7 @@ namespace Repository.DTO
         public bool Choice1 { get; set; }
         public bool Choice2 { get; set; }
         public bool Choice3 { get; set; }
+
+        public int QuizInstanceId { get; set; }
     }
 }

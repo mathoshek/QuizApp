@@ -1,4 +1,5 @@
-﻿@{
+﻿@model QuizApp.Models.SustainQuiz
+@{
     ViewBag.Title = "Sustine Quiz";
 }
 
@@ -10,11 +11,20 @@
 <h2>Sustine Quiz-uri</h2>
 
 <ul>
+   
      @foreach (var item in quizForuser)
      {
       <li>
-          <a href="/Home/SustainQuiz"> @item.QuizTitle </a>
+          <a href="/Home/SustainQuiz" onclick=""> @item.QuizTitle </a>
+         
       </li>
      }
+
     
 </ul>
+<script type="text/javascript">
+    function saveQuizId(data) {    
+        Session["QuizId"]=data;
+        return true;
+    }
+</script>
