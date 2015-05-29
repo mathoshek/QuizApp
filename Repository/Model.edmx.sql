@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/28/2015 22:28:18
+-- Date Created: 05/29/2015 12:59:33
 -- Generated from EDMX file: E:\Programming\QuizApp\Repository\Model.edmx
 -- --------------------------------------------------
 
@@ -23,14 +23,17 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_QuizInstance_Quiz]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[QuizInstances] DROP CONSTRAINT [FK_QuizInstance_Quiz];
 GO
-IF OBJECT_ID(N'[dbo].[FK_User_QuizInstance_QuizInstance]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[User_QuizInstance] DROP CONSTRAINT [FK_User_QuizInstance_QuizInstance];
+IF OBJECT_ID(N'[dbo].[FK_QuizInstanceQuizQuestionInstance]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[QuizQuestionInstances] DROP CONSTRAINT [FK_QuizInstanceQuizQuestionInstance];
 GO
 IF OBJECT_ID(N'[dbo].[FK_QuizQuestion_QuizQuestionDomain]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[QuizQuestions] DROP CONSTRAINT [FK_QuizQuestion_QuizQuestionDomain];
 GO
 IF OBJECT_ID(N'[dbo].[FK_QuizQuestionInstance_QuizQuestion]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[QuizQuestionInstances] DROP CONSTRAINT [FK_QuizQuestionInstance_QuizQuestion];
+GO
+IF OBJECT_ID(N'[dbo].[FK_User_QuizInstance_QuizInstance]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[User_QuizInstance] DROP CONSTRAINT [FK_User_QuizInstance_QuizInstance];
 GO
 IF OBJECT_ID(N'[dbo].[FK_User_QuizInstance_User]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[User_QuizInstance] DROP CONSTRAINT [FK_User_QuizInstance_User];
@@ -40,14 +43,8 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Quizs]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Quizs];
-GO
 IF OBJECT_ID(N'[dbo].[QuizInstances]', 'U') IS NOT NULL
     DROP TABLE [dbo].[QuizInstances];
-GO
-IF OBJECT_ID(N'[dbo].[QuizQuestions]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[QuizQuestions];
 GO
 IF OBJECT_ID(N'[dbo].[QuizQuestionDomains]', 'U') IS NOT NULL
     DROP TABLE [dbo].[QuizQuestionDomains];
@@ -55,27 +52,22 @@ GO
 IF OBJECT_ID(N'[dbo].[QuizQuestionInstances]', 'U') IS NOT NULL
     DROP TABLE [dbo].[QuizQuestionInstances];
 GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
+IF OBJECT_ID(N'[dbo].[QuizQuestions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[QuizQuestions];
+GO
+IF OBJECT_ID(N'[dbo].[Quizs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Quizs];
 GO
 IF OBJECT_ID(N'[dbo].[User_QuizInstance]', 'U') IS NOT NULL
     DROP TABLE [dbo].[User_QuizInstance];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
 -- Creating all tables
 -- --------------------------------------------------
-
--- Creating table 'Quizs'
-CREATE TABLE [dbo].[Quizs] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [QuizTitle] varchar(max)  NOT NULL,
-    [Time] int  NOT NULL,
-    [PassingScore] float  NOT NULL,
-    [NumQuestions] int  NOT NULL,
-    [DomainId] int  NOT NULL
-);
-GO
 
 -- Creating table 'QuizInstances'
 CREATE TABLE [dbo].[QuizInstances] (
@@ -83,6 +75,25 @@ CREATE TABLE [dbo].[QuizInstances] (
     [QuizId] int  NOT NULL,
     [IsStarted] bit  NOT NULL,
     [StartDate] datetime  NULL
+);
+GO
+
+-- Creating table 'QuizQuestionDomains'
+CREATE TABLE [dbo].[QuizQuestionDomains] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] varchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'QuizQuestionInstances'
+CREATE TABLE [dbo].[QuizQuestionInstances] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [QuizQuestionId] int  NOT NULL,
+    [AnswerSaved] bit  NOT NULL,
+    [Choice1] bit  NOT NULL,
+    [Choice2] bit  NOT NULL,
+    [Choice3] bit  NOT NULL,
+    [QuizInstanceId] int  NOT NULL
 );
 GO
 
@@ -101,21 +112,22 @@ CREATE TABLE [dbo].[QuizQuestions] (
 );
 GO
 
--- Creating table 'QuizQuestionDomains'
-CREATE TABLE [dbo].[QuizQuestionDomains] (
+-- Creating table 'Quizs'
+CREATE TABLE [dbo].[Quizs] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Name] varchar(max)  NOT NULL
+    [QuizTitle] varchar(max)  NOT NULL,
+    [Time] int  NOT NULL,
+    [PassingScore] float  NOT NULL,
+    [NumQuestions] int  NOT NULL,
+    [DomainId] int  NOT NULL
 );
 GO
 
--- Creating table 'QuizQuestionInstances'
-CREATE TABLE [dbo].[QuizQuestionInstances] (
+-- Creating table 'User_QuizInstance'
+CREATE TABLE [dbo].[User_QuizInstance] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [QuizQuestionId] int  NOT NULL,
-    [AnswerSaved] bit  NOT NULL,
-    [Choice1] bit  NOT NULL,
-    [Choice2] bit  NOT NULL,
-    [Choice3] bit  NOT NULL
+    [UserId] int  NOT NULL,
+    [QuizInstanceId] int  NOT NULL
 );
 GO
 
@@ -128,33 +140,13 @@ CREATE TABLE [dbo].[Users] (
 );
 GO
 
--- Creating table 'User_QuizInstance'
-CREATE TABLE [dbo].[User_QuizInstance] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [UserId] int  NOT NULL,
-    [QuizInstanceId] int  NOT NULL
-);
-GO
-
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [Id] in table 'Quizs'
-ALTER TABLE [dbo].[Quizs]
-ADD CONSTRAINT [PK_Quizs]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
 -- Creating primary key on [Id] in table 'QuizInstances'
 ALTER TABLE [dbo].[QuizInstances]
 ADD CONSTRAINT [PK_QuizInstances]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [Id] in table 'QuizQuestions'
-ALTER TABLE [dbo].[QuizQuestions]
-ADD CONSTRAINT [PK_QuizQuestions]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -170,9 +162,15 @@ ADD CONSTRAINT [PK_QuizQuestionInstances]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Users'
-ALTER TABLE [dbo].[Users]
-ADD CONSTRAINT [PK_Users]
+-- Creating primary key on [Id] in table 'QuizQuestions'
+ALTER TABLE [dbo].[QuizQuestions]
+ADD CONSTRAINT [PK_QuizQuestions]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Quizs'
+ALTER TABLE [dbo].[Quizs]
+ADD CONSTRAINT [PK_Quizs]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -182,23 +180,15 @@ ADD CONSTRAINT [PK_User_QuizInstance]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'Users'
+ALTER TABLE [dbo].[Users]
+ADD CONSTRAINT [PK_Users]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
-
--- Creating foreign key on [DomainId] in table 'Quizs'
-ALTER TABLE [dbo].[Quizs]
-ADD CONSTRAINT [FK_Quiz_QuizQuestionDomain]
-    FOREIGN KEY ([DomainId])
-    REFERENCES [dbo].[QuizQuestionDomains]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_Quiz_QuizQuestionDomain'
-CREATE INDEX [IX_FK_Quiz_QuizQuestionDomain]
-ON [dbo].[Quizs]
-    ([DomainId]);
-GO
 
 -- Creating foreign key on [QuizId] in table 'QuizInstances'
 ALTER TABLE [dbo].[QuizInstances]
@@ -214,6 +204,20 @@ ON [dbo].[QuizInstances]
     ([QuizId]);
 GO
 
+-- Creating foreign key on [QuizInstanceId] in table 'QuizQuestionInstances'
+ALTER TABLE [dbo].[QuizQuestionInstances]
+ADD CONSTRAINT [FK_QuizInstanceQuizQuestionInstance]
+    FOREIGN KEY ([QuizInstanceId])
+    REFERENCES [dbo].[QuizInstances]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_QuizInstanceQuizQuestionInstance'
+CREATE INDEX [IX_FK_QuizInstanceQuizQuestionInstance]
+ON [dbo].[QuizQuestionInstances]
+    ([QuizInstanceId]);
+GO
+
 -- Creating foreign key on [QuizInstanceId] in table 'User_QuizInstance'
 ALTER TABLE [dbo].[User_QuizInstance]
 ADD CONSTRAINT [FK_User_QuizInstance_QuizInstance]
@@ -226,6 +230,20 @@ ADD CONSTRAINT [FK_User_QuizInstance_QuizInstance]
 CREATE INDEX [IX_FK_User_QuizInstance_QuizInstance]
 ON [dbo].[User_QuizInstance]
     ([QuizInstanceId]);
+GO
+
+-- Creating foreign key on [DomainId] in table 'Quizs'
+ALTER TABLE [dbo].[Quizs]
+ADD CONSTRAINT [FK_Quiz_QuizQuestionDomain]
+    FOREIGN KEY ([DomainId])
+    REFERENCES [dbo].[QuizQuestionDomains]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Quiz_QuizQuestionDomain'
+CREATE INDEX [IX_FK_Quiz_QuizQuestionDomain]
+ON [dbo].[Quizs]
+    ([DomainId]);
 GO
 
 -- Creating foreign key on [DomainId] in table 'QuizQuestions'

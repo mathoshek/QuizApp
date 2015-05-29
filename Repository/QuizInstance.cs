@@ -16,6 +16,7 @@ namespace Repository
     {
         public QuizInstance()
         {
+            this.QuizQuestionInstances = new HashSet<QuizQuestionInstance>();
             this.User_QuizInstance = new HashSet<User_QuizInstance>();
         }
     
@@ -25,6 +26,7 @@ namespace Repository
         public Nullable<System.DateTime> StartDate { get; set; }
     
         public virtual Quiz Quiz { get; set; }
+        public virtual ICollection<QuizQuestionInstance> QuizQuestionInstances { get; set; }
         public virtual ICollection<User_QuizInstance> User_QuizInstance { get; set; }
     }
 }
