@@ -12,10 +12,9 @@ namespace QuizApp.Controllers
     {
         private QuizAppRepo repo = new QuizAppRepo();
 
-        public ActionResult SustainQuiz()
+        [HttpPost]
+        public ActionResult SustainQuiz(Models.StartQuizModel model)
         {
-            int id;
-            bool res = Int32.TryParse(Session["QuizId"].ToString(),out id);
             return View();
         }
 
@@ -39,17 +38,15 @@ namespace QuizApp.Controllers
         public ActionResult UserLoggedIn()
         {
             UserDto user =  (UserDto)Session["LoggedUser"];
-           /* List<QuizDto> quizes = new List<QuizDto>();
-            List<Repository.DTO.QuizInstanceDto> quizInstances = new List<QuizInstanceDto>();
-            quizInstances = repo.GetQuizInstancesForUser(user.Username);
-            foreach(var item in quizInstances)
+
+            Dictionary<string, string> quizesForUser = new Dictionary<string, string>();
+
+            foreach(var quizInstance in repo.GetQuizInstancesForUser(user.Username))
             {
-                QuizDto quiz = new QuizDto();
-                quiz = repo.getQuiz(item.Id);
-                quizes.Add(quiz);
+                QuizDto qdto = repo.getQuiz(quizInstance.QuizId);
+                quizesForUser[quizInstance.Id.ToString()] = qdto.QuizTitle;
             }
-            ViewBag.quizForuser = quizes;
-            ViewBag.quzInstancesId = quizInstances;*/
+            ViewBag.quizesForUser = quizesForUser;
             return View();
         }
 
