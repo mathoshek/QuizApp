@@ -212,7 +212,8 @@
     <Compile Include="Models\QuestionResponseEvent.cs" />
     <Compile Include="Models\QuestionSendEvent.cs" />
     <Compile Include="Models\QuestionsFactory.cs" />
-    <Compile Include="Models\SustainQuiz.cs" />
+    <Compile Include="Models\StartQuizModel.cs" />
+    <Compile Include="Models\SustainQuizModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserChallengeEvent.cs" />
     <Compile Include="Models\UserLoginEvent.cs" />

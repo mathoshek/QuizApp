@@ -1,30 +1,31 @@
-﻿@model QuizApp.Models.SustainQuiz
+﻿@model QuizApp.Models.StartQuizModel
 @{
     ViewBag.Title = "Sustine Quiz";
-}
-
-@{
-      var quizForuser = ViewBag.quizForUser as List<Repository.DTO.QuizDto>;
+    var quizesForUser = ViewBag.quizesForUser as Dictionary<string, string>;
 
 }
 
 <h2>Sustine Quiz-uri</h2>
 
-<ul>
-   
-     @foreach (var item in quizForuser)
-     {
-      <li>
-          <a href="/Home/SustainQuiz" onclick=""> @item.QuizTitle </a>
-         
-      </li>
-     }
+@using (Html.BeginForm("SustainQuiz", "Home", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.QuizInstanceId);
+    @Html.HiddenFor(x => x.Step);
+    <script>
+        document.getElementById("Step").value = 0;
+    </script>
+    <ul>
+        @foreach (var item in quizesForUser)
+        {
+            <li>
+                <input type="submit" onclick="populate(@item.Key)" value="@item.Value" />
+            </li>
+        }
+    </ul>
+}
 
-    
-</ul>
 <script type="text/javascript">
-    function saveQuizId(data) {    
-        Session["QuizId"]=data;
-        return true;
+    function populate(quizInstanceId) {
+        document.getElementById("QuizInstanceId").value = quizInstanceId;
     }
 </script>
