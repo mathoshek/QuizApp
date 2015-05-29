@@ -103,10 +103,15 @@ namespace QuizApp.Controllers
         {
             ViewBag.Users = repository.getUsers();
             ViewBag.Quizes = repository.getQuizes();
-            IDictionary<string, List<QuizInstanceDto>> quizInstances = new Dictionary<string, List<QuizInstanceDto>>();
+            IDictionary<string, List<string>> quizInstances = new Dictionary<string, List<string>>();
             foreach (var user in repository.getUsers())
             {
-                quizInstances[user.Username] = repository.GetQuizInstancesForUser(user.Username);
+                List<string> list = new List<string>();
+                foreach (var quizInstanceDto in repository.GetQuizInstancesForUser(user.Username))
+                {
+                    list.Add(repository.getQuiz(quizInstanceDto.QuizId).QuizTitle);
+                }
+                quizInstances[user.Username] = list;
             }
             ViewBag.QuizInstances = quizInstances;
 
