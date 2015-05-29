@@ -37,8 +37,6 @@ namespace QuizApp.Controllers
 
         public ActionResult Status()
         {
-            Session["LoggedUser"] = repo.getUser("adrian");
-            ViewBag.Status = repo.GetQuizInstancesForUser(Session["LoggedUser"].ToString());
             ViewBag.QuestionText = repo.getQuestionInstancesForQuizInstance(1);
 
             return View();
