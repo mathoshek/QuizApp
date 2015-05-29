@@ -12,12 +12,15 @@ namespace QuizApp.Models
         public string QuizTitle { get; set; }
 
         [Required]
-        public string Time { get; set; }
+        public int Time { get; set; }
 
         [Required]
-        public string PassingScore { get; set; }
+        public float PassingScore { get; set; }
 
         [Required]
-        public string QuestionsNumber { get; set; }
+        public int QuestionsNumber { get; set; }
+
+        [Required]
+        public  int DomainId { get; set; }
     }
 }

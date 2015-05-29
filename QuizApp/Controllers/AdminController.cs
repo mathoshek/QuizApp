@@ -41,6 +41,7 @@ namespace QuizApp.Controllers
 
         public ActionResult CreateQuiz()
         {
+            ViewBag.Domains = repository.getQuestionDomains();
             return View();
         }
 
@@ -66,7 +67,14 @@ namespace QuizApp.Controllers
         [HttpPost]
         public ActionResult CreateQuiz(Models.CreateQuizModel quiz)
         {
-            return View(quiz);
+            if (ModelState.IsValid)
+            {
+                if (quiz != null)
+                {
+                    repository.addQuiz(quiz.QuizTitle, quiz.Time, quiz.PassingScore, quiz.QuestionsNumber, quiz.DomainId);
+                }
+            }
+            return View("Index");
         }
 
         public ActionResult AssignQuiz()

@@ -2,11 +2,15 @@
 @{
     ViewBag.Title = "CreateQuiz";
 }
-
+@{
+    var domains = ViewBag.Domains as List<Repository.DTO.QuizQuestionDomainDto>;
+}
 <h2>CreateQuiz</h2>
 
 @using (Html.BeginForm("CreateQuiz", "Admin", FormMethod.Post))
 {
+
+
     @Html.ValidationSummary(true)
 
     if (ViewBag.Message != null)
@@ -36,14 +40,21 @@
             <td>@Html.TextBoxFor(u => u.Time)</td>
             <td>@Html.ValidationMessageFor(u => u.Time)</td>
         </tr>
+
         <tr>
             <td></td>
             <td>
-                <input type="submit" value="Create" onclick="@("window.location.href='" + @Url.Action("AfterLogin", "Home") + "'");" />
-                <input type="submit" value="Register"  />
+                <input type="submit" value="Create " />
+
             </td>
             <td></td>
         </tr>
-
     </table>
+    <label>Selectati domeniul</label>
+    <select name="DomainId" id="DomainId" style="width: 310px; height: 30px;">
+        @foreach (var item in domains)
+        {
+            <option value="@item.Id" @(item.Id != null ? "selected" : String.Empty)>@item.Name</option>
+        }
+    </select>
 }
