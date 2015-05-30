@@ -23,12 +23,8 @@ a {
 }
 
     a:link, a:visited,
-    a:active, a:hover {
+    a:active {
         color: #333;
-    }
-
-    a:hover {
-        background-color: #c7d1d6;
     }
 
 header, footer, hgroup,
@@ -436,7 +432,6 @@ input, textarea {
     font-size: 1.2em;
     margin: 5px 0 6px 0;
     padding: 5px;
-    width: 300px;
 }
 
 textarea {

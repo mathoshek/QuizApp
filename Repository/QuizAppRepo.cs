@@ -113,6 +113,25 @@ namespace Repository
             return quizQuestionDto;
         }
 
+        public void UpdateQuizQuestion(int questionId, int domainId, string questionText, bool isSingleChoice,
+            string answer1Text, bool answer1Correct,
+            string answer2Text, bool answer2Correct,
+            string answer3Text, bool answer3Correct)
+        {
+            QuizQuestion quizQuestion = ctx.QuizQuestions.FirstOrDefault(x => x.Id == questionId);
+            quizQuestion.QuestionText = questionText;
+            quizQuestion.Answer1Text = answer1Text;
+            quizQuestion.Answer1Correct = answer1Correct;
+            quizQuestion.Answer2Text = answer2Text;
+            quizQuestion.Answer2Correct = answer2Correct;
+            quizQuestion.Answer3Text = answer3Text;
+            quizQuestion.Answer3Correct = answer3Correct;
+            quizQuestion.DomainId = domainId;
+            quizQuestion.IsSingleChoice = isSingleChoice;
+
+            ctx.SaveChanges();
+        }
+
         public QuizQuestionDto getQuizQuestion(int id)
         {
             QuizQuestion quizQuestion = ctx.QuizQuestions.FirstOrDefault(x => x.Id == id);
@@ -132,6 +151,12 @@ namespace Repository
             quizQuestionDto.IsSingleChoice = quizQuestion.IsSingleChoice;
 
             return quizQuestionDto;
+        }
+
+        public void DeleteQuizQuestion(int questionId)
+        {
+            ctx.QuizQuestions.Remove(ctx.QuizQuestions.FirstOrDefault(x => x.Id == questionId));
+            ctx.SaveChanges();
         }
 
         // Quiz Table

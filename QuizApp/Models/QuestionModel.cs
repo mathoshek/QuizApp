@@ -7,32 +7,39 @@ namespace QuizApp.Models
 {
     public class QuestionModel
     {
-        public string Id { get; set; }
-        public string QuestionText { get; set; }
-        public string FirstAnswer { get; set; }
-        public string SecondAnswer { get; set; }
-        public string ThirdAnswer { get; set; }
         public int DomainId { get; set; }
-        public int isSingle { get; set; }
-        public bool CorrectFirst { get; set; }
-        public bool CorrectSecond { get; set; }
-        public bool CorrectThird { get; set; }
+        public string QuestionText { get; set; }
+        public bool IsSingleChoice { get; set; }
+        public string FirstAnswerText { get; set; }
+        public bool FirstAnswerCorrect { get; set; }
+        public string SecondAnswerText { get; set; }
+        public bool SecondAnswerCorrect { get; set; }
+        public string ThirdAnswerText { get; set; }
+        public bool ThirdAnswerCorrect { get; set; }
 
         public QuestionModel()
         {
-
         }
 
-        public QuestionModel(string text, string FirstAnswers, string secondsAnswer, string ThirdAnswers, bool correct, bool corrects, bool correctt, int DomainId)
+        public QuestionModel(int domainId, 
+            string questionText, 
+            bool isSingleChoice,
+            string firstAnswerText,
+            bool firstAnswerCorrect,
+            string secondAnswerText,
+            bool secondAnswerCorrect,
+            string thirdAnswerText, 
+            bool thirdAnswerCorrect)
         {
-            this.QuestionText = text;
-            this.FirstAnswer = FirstAnswer;
-            this.SecondAnswer = secondsAnswer;
-            this.ThirdAnswer = ThirdAnswer;
-            this.CorrectFirst = correct;
-            this.CorrectSecond = corrects;
-            this.CorrectThird = correctt;
-            this.DomainId = DomainId;
+            this.DomainId = domainId;
+            this.QuestionText = questionText;
+            this.IsSingleChoice = isSingleChoice;
+            this.FirstAnswerText = firstAnswerText;
+            this.FirstAnswerCorrect = firstAnswerCorrect;
+            this.SecondAnswerText = secondAnswerText;
+            this.SecondAnswerCorrect = secondAnswerCorrect;
+            this.ThirdAnswerText = thirdAnswerText;
+            this.ThirdAnswerCorrect = thirdAnswerCorrect;
         }
     }
 

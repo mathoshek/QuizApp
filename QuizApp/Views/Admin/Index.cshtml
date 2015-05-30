@@ -1,14 +1,12 @@
 ﻿@{
-    ViewBag.Title = "FirstPage";
+    ViewBag.Title = "Panou Admin";
 }
 
-<h2>Prima Pagina</h2>
+<h2>Panou Admin</h2>
 
-<h1>Bine ai venit in aplicatia QuizzApp....!!!!!!!</h1>
 <div>
-    <input id="btnViewQuestion" type="button" value="Vizualizare Intrebari" onclick="@("window.location.href='" + @Url.Action("AllQuestions", "Admin") + "'");" />
-    <input id="btnViewDomains" type="button" value="Vizualizare Domenii" onclick="@("window.location.href='" + @Url.Action("ViewDomains", "Admin") + "'");" />
-    <input id="btnNewQuestion" type="button" value="Adauga Intrebare" onclick="@("window.location.href='" + @Url.Action("Question", "Admin") + "'");" />
-    <input id="btnCreateQuiz" type="button" value="Adauga Quiz" onclick="@("window.location.href='" + @Url.Action("CreateQuiz", "Admin") + "'");" />
-    <input id="btnAssignQuiz" type="button" value="Asigneaza Quiz" onclick="@("window.location.href='" + @Url.Action("AssignQuiz", "Admin") + "'");" />
+    <a class="btn btn-default" href="@Url.Action("AllQuestions", "Admin")">Administreaza Intrebari</a>
+    <a class="btn btn-default" href="@Url.Action("ViewDomains", "Admin")">Administreaza Domenii</a>
+    <a class="btn btn-default" href="@Url.Action("CreateQuiz", "Admin")">Administreaza Quizuri</a>
+    <a class="btn btn-default" href="@Url.Action("AssignQuiz", "Admin")">Asigneaza Quizuri</a>
 </div>

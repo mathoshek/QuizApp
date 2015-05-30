@@ -18,12 +18,40 @@ namespace QuizApp.Controllers
             return View();
         }
 
-        public ActionResult Question()
+        public ActionResult Question(int? questionId)
         {
             ViewBag.Domains = repository.getQuestionDomains();
-            return View();
+
+            if (questionId.HasValue == false)
+            {
+                ViewBag.Mode = "create";
+                return View(new Models.QuestionModel(
+                    repository.getQuestionDomains().FirstOrDefault().Id,
+                    "",
+                    true,
+                    "",
+                    false,
+                    "",
+                    false,
+                    "",
+                    false));
+            }
+
+            ViewBag.Mode = "update";
+            ViewBag.QuestionId = questionId.Value.ToString();
+            QuizQuestionDto qqdto = repository.getQuizQuestion(questionId.Value);
+
+            return View(new Models.QuestionModel(
+                qqdto.DomainId, qqdto.QuestionText, qqdto.IsSingleChoice, qqdto.Answer1Text, qqdto.Answer1Correct,
+                qqdto.Answer2Text, qqdto.Answer2Correct, qqdto.Answer3Text, qqdto.Answer3Correct));
         }
-        
+
+        public ActionResult DeleteQuestion(int questionId)
+        {
+            repository.DeleteQuizQuestion(questionId);
+            return RedirectToAction("AllQuestions");
+        }
+
         public ActionResult CreateDomain()
         {
             return View();
@@ -55,17 +83,22 @@ namespace QuizApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Question(Models.QuestionModel question)
+        public ActionResult Question(int? questionId, Models.QuestionModel question)
         {
-            bool isSingle = false;
-            if (question.isSingle == 1)
+            if (questionId.HasValue == false)
             {
-                isSingle = true;
+                repository.addQuizQuestion(question.QuestionText, question.FirstAnswerText, question.FirstAnswerCorrect, question.SecondAnswerText, question.SecondAnswerCorrect, question.ThirdAnswerText, question.ThirdAnswerCorrect, question.DomainId, question.IsSingleChoice);
             }
-            repository.addQuizQuestion(question.QuestionText, question.FirstAnswer, question.CorrectFirst, question.SecondAnswer, question.CorrectSecond, question.ThirdAnswer, question.CorrectThird, question.DomainId,isSingle );
-            return RedirectToAction("Index");
+            else
+            {
+                repository.UpdateQuizQuestion(questionId.Value, question.DomainId, question.QuestionText, question.IsSingleChoice,
+                    question.FirstAnswerText, question.FirstAnswerCorrect,
+                    question.SecondAnswerText, question.SecondAnswerCorrect,
+                    question.ThirdAnswerText, question.ThirdAnswerCorrect);
+            }
+            return RedirectToAction("AllQuestions");
         }
-    
+
         [HttpPost]
         public ActionResult CreateQuiz(Models.CreateQuizModel quiz)
         {

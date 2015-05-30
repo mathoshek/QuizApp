@@ -1,20 +1,37 @@
 @{
-    ViewBag.Title = "Admin";
-}
-@{
+    ViewBag.Title = "Administreaza Intrebari";
     var questions = ViewBag.Questions as List<Repository.DTO.QuizQuestionDto>;
 }
 
-<h2>Admin</h2>
+<h2>Administreaza Intrebari</h2>
 
-    <div> <h1>Toate intrebarile.....</h1></div>
-    <div>
-        <input id="btnNewQuestion" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
-        <input id="btnHome" type="button" value="Intrebare noua" onclick="@("window.location.href='" + @Url.Action("Question", "Admin") + "'");" />
-        <ul>
+<div>
+    <a class="btn btn-default" href="@Url.Action("Index", "Admin")">Acasa</a>
+    <a class="btn btn-default" href="@Url.Action("Question", "Admin")">Creeaza Intrebare</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Intrebare</td>
+                <td>Domeniu</td>
+                <td>Subdomeniu</td>
+                <td>Actiuni</td>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var item in questions)
             {
-                <li>@item.QuestionText</li>
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td>@item.QuestionText</td>
+                    <td>*</td>
+                    <td>*</td>
+                    <td>
+                        <a href="@Url.Action("Question", "Admin", new{questionId=item.Id})" class="icon"><span class="glyphicon glyphicon-edit" aria-hidden="true" /></a>
+                        <a href="@Url.Action("DeleteQuestion", "Admin", new{questionId=item.Id})" class="icon"><span class="glyphicon glyphicon-remove" aria-hidden="true" /></a>
+                    </td>
+                </tr>
             }
-        </ul>
-    </div>
+        </tbody>
+    </table>
+</div>

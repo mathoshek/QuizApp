@@ -1,82 +1,73 @@
 ﻿@model QuizApp.Models.QuestionModel
 @{
-   ViewBag.Title = "Question";
-}
-@{
+    ViewBag.Title = "Vizualizeaza/Editeaza intrebare";
     var domains = ViewBag.Domains as List<Repository.DTO.QuizQuestionDomainDto>;
+    var mode = ViewBag.Mode as string;
+    var questionId = ViewBag.QuestionId as string;
 }
 
-<h2>Question</h2>
+<h2>Vizualizeaza/Editeaza intrebare</h2>
 
-<div><h2>Detalii intrebare...</h2></div>
-    <div>
-        <form name="formQuestion" method="post" action="/Admin/Question">
-            <fieldset>
-                <legend>
-                    Editare/Creare intrebare
-                </legend>
-                <ol>
-                    <li>
-                        <input id="btnHome" type="button" value="Home" onclick="@("window.location.href='" + @Url.Action("Index", "Admin") + "'");" />
-                        <input id="btnSaveQuestion" type="submit" value="Salveaza" />    
-                    </li>
-                    <li>
-                       <label>Selectatii domeniul</label>
-                        <select name="DomainId" id="DomainId" style="width: 310px;
-                               height: 30px;">
-                            @foreach (var item in domains)
-                            {
-                                <option value="@item.Id" @(item.Id != null? "selected" : String.Empty)>@item.Name</option>
-                            }
-                        </select>
-                    </li>
-                    <li>
-                        @Html.LabelFor(q => q.QuestionText)
-                        @Html.TextAreaFor(q => q.QuestionText)
-                    <li>
-                        <div>
-                            <div >
-                                <label for="single">O singura varianta de raspuns</label>
-                                <input type="radio" name="IsSingle" id="single" value="1" checked />
-                            </div>
-
-                            <div>
-                                <label for="profesor">Mai multe variante de raspuns</label>
-                                <input type="radio" name="IsSingle" id="multiple" value="0" />
-                            </div>   
-                        </div>
-                    </li>
-                    <li>
-                        <div>         
-                            @Html.LabelFor(q => q.FirstAnswer)
-                            @Html.TextAreaFor(q => q.FirstAnswer)
-                            @Html.CheckBoxFor(q => q.CorrectFirst)
-                            Corect
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            @Html.LabelFor(q => q.SecondAnswer)
-                            @Html.TextAreaFor(q => q.SecondAnswer)
-                            @Html.CheckBoxFor(q => q.CorrectSecond)
-                           Corect
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            @Html.LabelFor(q => q.ThirdAnswer)
-                            @Html.TextAreaFor(q => q.ThirdAnswer)
-                            @Html.CheckBoxFor(q => q.CorrectThird)
-                            Corect
-                        </div>
-                    </li>
-                    <li>
-                        <input id="btnSaveQuestion" type="submit" value="Salveaza"/>
-                    </li>
-                </ol>
-            </fieldset>
-        </form>
+<form method="post" action="/Admin/Question@(mode == "update" ? "?questionId=" + questionId : String.Empty)">
+    <div class="form-group">
+        <label for="DomainId">Domeniu</label>
+        <select class="form-control" name="DomainId" id="DomainId">
+            @foreach (var item in domains)
+            {
+                <option value="@item.Id" @(item.Id == Model.DomainId ? "selected" : String.Empty)>@item.Name</option>
+            }
+        </select>
     </div>
-  
+    <div class="form-group">
+        <label for="QuestionText">Textul Intrebarii</label>
+        <textarea id="QuestionText" name="QuestionText" class="form-control">@(Model.QuestionText)</textarea>
+    </div>
+    <div class="form-group">
+        <div class="radio">
+            <label>
+                <input type="radio" name="IsSingleChoice" value="@(Model.IsSingleChoice)" checked />
+                Cu o singura varianta de raspuns
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="IsSingleChoice" value="@(Model.IsSingleChoice)" />
+                Cu mai multe variante de raspuns
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="FirstAnswerText">Prima intrebare</label>
+        <textarea name="FirstAnswerText" id="FirstAnswerText" class="form-control">@Model.FirstAnswerText</textarea>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="FirstAnswerCorrect" id="FirstAnswerCorrect" @(Model.FirstAnswerCorrect == true ? "checked" : String.Empty)>
+                Correct?
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="SecondAnswerText">Prima intrebare</label>
+        <textarea name="SecondAnswerText" id="SecondAnswerText" class="form-control">@Model.SecondAnswerText</textarea>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="SecondAnswerCorrect" id="SecondAnswerCorrect" @(Model.SecondAnswerCorrect == true ? "checked" : String.Empty)>
+                Correct?
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="ThirdAnswerText">Prima intrebare</label>
+        <textarea name="ThirdAnswerText" id="ThirdAnswerText" class="form-control">@Model.ThirdAnswerText</textarea>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="ThirdAnswerCorrect" id="ThirdAnswerCorrect" @(Model.ThirdAnswerCorrect == true ? "checked" : String.Empty)>
+                Correct?
+            </label>
+        </div>
+    </div>        
+    <button class="btn btn-default" type="submit">Salveaza</button>
+</form>
+
 
 
