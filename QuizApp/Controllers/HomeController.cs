@@ -71,6 +71,26 @@ namespace QuizApp.Controllers
 
         public ActionResult Result(int quizInstanceId)
         {
+            int numCorrect = 0;
+            int numTotal = repo.getQuestionInstancesForQuizInstance(quizInstanceId).Count;
+            foreach (var qidto in repo.getQuestionInstancesForQuizInstance(quizInstanceId))
+            {
+                QuizQuestionDto qqdto = repo.getQuizQuestion(qidto.QuestionId);
+                if (qqdto.Answer1Correct == qidto.Choice1 &&
+                    qqdto.Answer2Correct == qidto.Choice2 &&
+                    qqdto.Answer3Correct == qidto.Choice3)
+                    numCorrect++;
+            }
+
+            if ((double)numCorrect / numTotal >= repo.getQuiz(repo.GetQuizInstance(quizInstanceId).QuizId).PassingScore)
+            {
+                ViewBag.Message = "Felicitari, ai trecut examenul cu scorul: " + ((double)numCorrect / numTotal);
+            }
+            else
+            {
+                ViewBag.Message = "Ne pare rau, nu ai trecut examenul, scorul tau este: " + ((double)numCorrect / numTotal);
+            }
+
             return View();
         }
 
@@ -87,6 +107,8 @@ namespace QuizApp.Controllers
 
         public ActionResult FinishQuiz(int quizInstanceId)
         {
+            repo.FinishQuizInstance(quizInstanceId);
+
             return RedirectToAction("Result", new { quizInstanceId = quizInstanceId });
         }
 
