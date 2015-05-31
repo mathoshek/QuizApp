@@ -15,5 +15,8 @@ namespace Repository.DTO
         public bool IsStarted { get; set; }
 
         public Nullable<DateTime> StartTime { get; set; }
+
+        public bool IsFinished { get; set; }
+        public Nullable<DateTime> FinishDate { get; set; }
     }
 }

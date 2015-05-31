@@ -1,15 +1,112 @@
-﻿@{
+﻿@model QuizApp.Models.SubmitAnswerModel
+@{
     ViewBag.Title = "Sustine Quiz";
-    var quizInstanceId = ViewBag.QuizInstanceId as string;
+    int quizInstanceId = ViewBag.QuizInstanceId;
+    int timeLeft = ViewBag.TimeLeft;
+    var question = ViewBag.Question as Repository.DTO.QuizQuestionDto;
+    var domains = ViewBag.Domains as Dictionary<int, Repository.DTO.QuizQuestionDomainDto>;
+    var subdomains = ViewBag.Subdomains as Dictionary<int, Repository.DTO.QuizQuestionSubdomainDto>;
+    int currentIndex = ViewBag.CurrentIndex;
+    int maxIndex = ViewBag.MaxIndex;
 }
 
 <h2>Sustine Quiz</h2>
 <div class="col-md-6">
     <a class="btn btn-default" href="@Url.Action("Index", "Home")">Acasa</a>
-    <a class="btn btn-default" href="@Url.Action("Status", "Home", new { quizInstanceId = quizInstanceId })">Statut</a>
+    <a class="btn btn-default" href="@Url.Action("Status", "Home", new { quizInstanceId = quizInstanceId })">Termina Quiz-ul</a>
 </div>
 <div class="col-md-6">
-    <div class="pull-right">
+    <div class="pull-right" id="timer">
         Timer
     </div>
 </div>
+<div class="col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p><b>Domeniu: </b> @domains[question.DomainId].Name</p>
+            <p><b>Subdomeniu: </b> @subdomains[question.SubdomainId].Name</p>
+            <p><b>@question.QuestionText</b></p>
+            <form action="/Home/SubmitAnswer?quizInstanceId=@quizInstanceId&index=@currentIndex" method="post">
+                @if (question.IsSingleChoice)
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="SingleChoiceAnswer" value="0" @(Model != null && Model.SingleChoiceAnswer == 0 ? "checked" : String.Empty)/>
+                            @question.Answer1Text
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="SingleChoiceAnswer" value="1" @(Model != null && Model.SingleChoiceAnswer == 1 ? "checked" : String.Empty) />
+                            @question.Answer2Text
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="SingleChoiceAnswer" value="2" @(Model != null && Model.SingleChoiceAnswer == 2 ? "checked" : String.Empty) />
+                            @question.Answer3Text
+                        </label>
+                    </div>
+                }
+                else
+                {
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="MultipleChoiceAnswer1" value="true" @(Model != null && Model.MultipleChoiceAnswer1 == true ? "checked" : String.Empty) />
+                            @question.Answer1Text
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="MultipleChoiceAnswer2" value="true" @(Model != null && Model.MultipleChoiceAnswer2 == true ? "checked" : String.Empty) />
+                            @question.Answer2Text
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="MultipleChoiceAnswer3" value="true" @(Model != null && Model.MultipleChoiceAnswer3 == true ? "checked" : String.Empty) />
+                            @question.Answer3Text
+                        </label>
+                    </div>
+                }
+                <input type="submit" value="Salveaza" />
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    @if (currentIndex - 1 < 0)
+    {
+        <a href="#" class="btn btn-default disabled">Prev</a>
+    }
+    else
+    {
+        <a href="@Url.Action("TakeQuiz", "Home", new { quizInstanceId = quizInstanceId, index = currentIndex - 1})" class="btn btn-default">Prev</a>
+    }
+</div>
+<div class="col-md-6">
+    <div class="pull-right">
+        @if (currentIndex + 1 >= maxIndex)
+        {
+            <a href="#" class="btn btn-default disabled">Next</a>
+        }
+        else
+        {
+            <a href="@Url.Action("TakeQuiz", "Home", new { quizInstanceId = quizInstanceId, index = currentIndex + 1})" class="btn btn-default">Next</a>
+        }
+    </div>
+</div>
+<script>
+    var secondsRemaining = @timeLeft;
+    function Print(secs){
+        var days = Math.floor(secs / 86400);
+        var hours = Math.floor(secs / 3600) - days * 24;
+        var minutes = Math.floor(secs / 60) - days * 24 * 60 - hours * 60;
+        var seconds = secs % 60;
+        document.getElementById("timer").innerHTML ="Time left: " + days + " days, " + hours + " hours, " + minutes + " minutes and " + seconds + " seconds.";
+    }
+    window.setInterval(function(){
+        secondsRemaining--;
+        Print(secondsRemaining);
+    }, 1000);
+</script>

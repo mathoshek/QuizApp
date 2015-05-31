@@ -203,6 +203,7 @@
     <Compile Include="Models\CreateQuizModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\StartQuizModel.cs" />
+    <Compile Include="Models\SubmitAnswerModel.cs" />
     <Compile Include="Models\SustainQuizModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -312,6 +313,7 @@
     <Content Include="Views\Admin\AssignQuiz.cshtml" />
     <Content Include="Views\Home\Status.cshtml" />
     <Content Include="Views\Home\TakeQuiz.cshtml" />
+    <Content Include="Views\Home\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

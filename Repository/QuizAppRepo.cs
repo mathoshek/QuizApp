@@ -272,6 +272,9 @@ namespace Repository
             QuizInstance qi = new QuizInstance();
             qi.IsStarted = quizInstanceDto.IsStarted;
             qi.QuizId = quizInstanceDto.QuizId;
+            qi.StartDate = quizInstanceDto.StartTime;
+            qi.IsFinished = quizInstanceDto.IsFinished;
+            qi.FinishDate = quizInstanceDto.FinishDate;
             qi = ctx.QuizInstances.Add(qi);
             ctx.SaveChanges();
 
@@ -286,7 +289,8 @@ namespace Repository
             qidto.IsStarted = qi.IsStarted;
             qidto.QuizId = qi.QuizId;
             qidto.StartTime = qi.StartDate;
-
+            qidto.IsFinished = qi.IsFinished;
+            qidto.FinishDate = qi.FinishDate;
             return qidto;
         }
 
@@ -311,6 +315,8 @@ namespace Repository
                 dto.IsStarted = qi.IsStarted;
                 dto.QuizId = qi.QuizId;
                 dto.StartTime = qi.StartDate;
+                dto.IsFinished = qi.IsFinished;
+                dto.FinishDate = qi.FinishDate;
                 list.Add(dto);
             }
             return list;
@@ -393,6 +399,54 @@ namespace Repository
             qqsdto.Name = qqs.Name;
             qqsdto.DomainId = qqs.QuizQuestionDomainId;
             return qqsdto;
+        }
+
+        public QuizInstanceDto GetQuizInstance(int quizInstanceId)
+        {
+            QuizInstance qi = ctx.QuizInstances.FirstOrDefault(x => x.Id == quizInstanceId);
+            if (qi == null)
+                return null;
+            QuizInstanceDto qidto = new QuizInstanceDto();
+            qidto.Id = qi.Id;
+            qidto.IsStarted = qi.IsStarted;
+            qidto.QuizId = qi.QuizId;
+            qidto.StartTime = qi.StartDate;
+            qidto.IsFinished = qi.IsFinished;
+            qidto.FinishDate = qi.FinishDate;
+
+            return qidto;
+        }
+
+        public void StartQuizInstance(int quizInstanceId)
+        {
+            QuizInstance qi = ctx.QuizInstances.FirstOrDefault(x => x.Id == quizInstanceId);
+            if (qi == null)
+                return;
+            qi.IsStarted = true;
+            qi.StartDate = DateTime.Now;
+            ctx.SaveChanges();
+        }
+
+        public void FinishQuizInstance(int quizInstanceId)
+        {
+            QuizInstance qi = ctx.QuizInstances.FirstOrDefault(x => x.Id == quizInstanceId);
+            if (qi == null)
+                return;
+
+            qi.IsFinished = true;
+            qi.FinishDate = DateTime.Now;
+            ctx.SaveChanges();
+        }
+
+        public void SaveQuestionInstanceAnswer(int questionInstanceId, bool first, bool second, bool third)
+        {
+            QuizQuestionInstance qqi = ctx.QuizQuestionInstances.FirstOrDefault(x => x.Id == questionInstanceId);
+            qqi.AnswerSaved = true;
+            qqi.Choice1 = first;
+            qqi.Choice2 = second;
+            qqi.Choice3 = third;
+
+            ctx.SaveChanges();
         }
     }
 }

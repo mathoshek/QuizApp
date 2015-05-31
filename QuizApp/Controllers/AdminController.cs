@@ -149,6 +149,7 @@ namespace QuizApp.Controllers
             QuizInstanceDto qi = new QuizInstanceDto();
             qi.IsStarted = false;
             qi.QuizId = model.QuizId;
+            qi.IsFinished = false;
 
             qi = repository.AddQuizInstanceToUser(model.Username, qi);
 

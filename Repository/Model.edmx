@@ -13,6 +13,8 @@
           <Property Name="QuizId" Type="int" Nullable="false" />
           <Property Name="IsStarted" Type="bit" Nullable="false" />
           <Property Name="StartDate" Type="datetime" />
+          <Property Name="IsFinished" Type="bit" Nullable="false" />
+          <Property Name="FinishDate" Type="datetime" />
         </EntityType>
         <EntityType Name="QuizQuestionDomains">
           <Key>
@@ -277,6 +279,8 @@
           <Property Name="QuizId" Type="Int32" Nullable="false" />
           <Property Name="IsStarted" Type="Boolean" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="IsFinished" Type="Boolean" Nullable="false" />
+          <Property Name="FinishDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Quiz" Relationship="Model.FK_QuizInstance_Quiz" FromRole="QuizInstance" ToRole="Quiz" />
           <NavigationProperty Name="QuizQuestionInstances" Relationship="Model.FK_QuizInstanceQuizQuestionInstance" FromRole="QuizInstance" ToRole="QuizQuestionInstance" />
           <NavigationProperty Name="User_QuizInstance" Relationship="Model.FK_User_QuizInstance_QuizInstance" FromRole="QuizInstance" ToRole="User_QuizInstance" />
@@ -470,6 +474,8 @@
           <EntitySetMapping Name="QuizInstances">
             <EntityTypeMapping TypeName="Model.QuizInstance">
               <MappingFragment StoreEntitySet="QuizInstances">
+                <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
+                <ScalarProperty Name="IsFinished" ColumnName="IsFinished" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="IsStarted" ColumnName="IsStarted" />
                 <ScalarProperty Name="QuizId" ColumnName="QuizId" />

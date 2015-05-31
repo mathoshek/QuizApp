@@ -1,37 +1,39 @@
 ﻿@{
     ViewBag.Title = "Status";
+    var questions = ViewBag.Questions as Dictionary<int, Repository.DTO.QuizQuestionDto>;
+    var questionInstances = ViewBag.QuestionInstances as List<Repository.DTO.QuestionInstanceDto>;
+    var domains = ViewBag.Domains as Dictionary<int, Repository.DTO.QuizQuestionDomainDto>;
+    var subdomains = ViewBag.Subdomains as Dictionary<int, Repository.DTO.QuizQuestionSubdomainDto>;
+    int quizInstanceId = ViewBag.QuizInstanceId;
 }
-@{
-    var status = ViewBag.QuestionText as List<Repository.DTO.QuestionInstanceDto>;
-}
+
 <h2>Status</h2>
 
-<div>
-    @Html.ValidationSummary(true)
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Intrebare</th>
+            <th>Domeniu</th>
+            <th>Subdomeniu</th>
+            <th>Actiuni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < questionInstances.Count; i++)
+        {
+            var item = questionInstances[i];
+            <tr class="@(item.AnswerSaved == true ? "info" : "danger")">
+                <th scope="row">@i</th>
+                <td>@questions[item.QuestionId].QuestionText</td>
+                <td>@domains[questions[item.QuestionId].DomainId].Name</td>
+                <td>@subdomains[questions[item.QuestionId].SubdomainId].Name</td>
+                <td>
+                    <a href="@Url.Action("TakeQuiz", "Home", new{quizInstanceId=quizInstanceId, index = i})" class="icon"><span class="glyphicon glyphicon-edit" aria-hidden="true" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-    @if (ViewBag.Message != null)
-    {
-        <div style="border:2px solid red">
-            @ViewBag.Message;
-        </div>
-    }
-    <div
-        <ol>
-            @foreach (var item in status)
-            {
-                if (item.AnswerSaved == false)
-                {
-                    <li style="color:red">@item.QuestionId</li>
-                }
-                else
-                {
-                    <li style="background-color: green">@item.QuestionId</li>
-                }
-                
-            }
-        </ol>
-    </div>
-
-
-
-</div>
+<a href="@Url.Action("FinishQuiz", "Home", new{quizInstanceId = quizInstanceId})" class="btn btn-primary">Trmite Quiz-ul</a>

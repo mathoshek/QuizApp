@@ -9,7 +9,7 @@
     @foreach (var item in quizesForUser)
     {
         <li>
-            <a class="btn btn-default" href="@Url.Action("TakeQuiz", "Home", new { quizInstanceId = item.Key })">@item.Value</a>
+            <a class="btn btn-default" href="@Url.Action("TakeQuiz", "Home", new { quizInstanceId = item.Key, index = 0 })">@item.Value</a>
         </li>
     }
 </ul>

@@ -24,6 +24,8 @@ namespace Repository
         public int QuizId { get; set; }
         public bool IsStarted { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
+        public bool IsFinished { get; set; }
+        public Nullable<System.DateTime> FinishDate { get; set; }
     
         public virtual Quiz Quiz { get; set; }
         public virtual ICollection<QuizQuestionInstance> QuizQuestionInstances { get; set; }
