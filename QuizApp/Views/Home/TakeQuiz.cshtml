@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Sustine Quiz";
+    var quizInstanceId = ViewBag.QuizInstanceId as string;
+}
+
+<h2>Sustine Quiz</h2>
+<div class="col-md-6">
+    <a class="btn btn-default" href="@Url.Action("Index", "Home")">Acasa</a>
+    <a class="btn btn-default" href="@Url.Action("Status", "Home", new { quizInstanceId = quizInstanceId })">Statut</a>
+</div>
+<div class="col-md-6">
+    <div class="pull-right">
+        Timer
+    </div>
+</div>
