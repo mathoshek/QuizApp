@@ -22,6 +22,7 @@ namespace Repository
         public int Id { get; set; }
         public string QuestionText { get; set; }
         public int DomainId { get; set; }
+        public int SubdomainId { get; set; }
         public bool IsSingleChoice { get; set; }
         public string Answer1Text { get; set; }
         public bool Answer1Correct { get; set; }

@@ -21,12 +21,13 @@ namespace QuizApp.Controllers
         public ActionResult Question(int? questionId)
         {
             ViewBag.Domains = repository.getQuestionDomains();
+            ViewBag.Subdomains = repository.getQuizQuestionSubdomains();
 
             if (questionId.HasValue == false)
             {
                 ViewBag.Mode = "create";
                 return View(new Models.QuestionModel(
-                    repository.getQuestionDomains().FirstOrDefault().Id,
+                    repository.getQuizQuestionSubdomains().FirstOrDefault().DomainId,
                     "",
                     true,
                     "",
@@ -34,7 +35,8 @@ namespace QuizApp.Controllers
                     "",
                     false,
                     "",
-                    false));
+                    false,
+                    repository.getQuizQuestionSubdomains().FirstOrDefault().Id));
             }
 
             ViewBag.Mode = "update";
@@ -43,7 +45,7 @@ namespace QuizApp.Controllers
 
             return View(new Models.QuestionModel(
                 qqdto.DomainId, qqdto.QuestionText, qqdto.IsSingleChoice, qqdto.Answer1Text, qqdto.Answer1Correct,
-                qqdto.Answer2Text, qqdto.Answer2Correct, qqdto.Answer3Text, qqdto.Answer3Correct));
+                qqdto.Answer2Text, qqdto.Answer2Correct, qqdto.Answer3Text, qqdto.Answer3Correct, qqdto.SubdomainId));
         }
 
         public ActionResult DeleteQuestion(int questionId)
@@ -57,15 +59,18 @@ namespace QuizApp.Controllers
             return View();
         }
 
-        public ActionResult ViewDomains()
+        public ActionResult ManageDomains()
         {
             ViewBag.Domains = repository.getQuestionDomains();
+            ViewBag.Subdomains = repository.getQuizQuestionSubdomains();
             return View();
         }
 
         public ActionResult AllQuestions()
         {
             ViewBag.Questions = repository.getQuizQuestions();
+            ViewBag.Domains = repository.getQuestionDomains().ToDictionary(x => x.Id);
+            ViewBag.Subdomains = repository.getQuizQuestionSubdomains().ToDictionary(x => x.Id);
             return View();
         }
 
@@ -76,10 +81,10 @@ namespace QuizApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateDomain(Models.DomainModel domain)
+        public ActionResult AddDomain(Models.AddDomainModel domain)
         {
             repository.addQuestionDomain(domain.DomainName);
-            return RedirectToAction("ViewDomains");
+            return RedirectToAction("ManageDomains");
         }
 
         [HttpPost]
@@ -87,14 +92,15 @@ namespace QuizApp.Controllers
         {
             if (questionId.HasValue == false)
             {
-                repository.addQuizQuestion(question.QuestionText, question.FirstAnswerText, question.FirstAnswerCorrect, question.SecondAnswerText, question.SecondAnswerCorrect, question.ThirdAnswerText, question.ThirdAnswerCorrect, question.DomainId, question.IsSingleChoice);
+                repository.addQuizQuestion(question.QuestionText, question.FirstAnswerText, question.FirstAnswerCorrect, question.SecondAnswerText, question.SecondAnswerCorrect, question.ThirdAnswerText, question.ThirdAnswerCorrect, question.DomainId, question.IsSingleChoice, question.SubdomainId);
             }
             else
             {
                 repository.UpdateQuizQuestion(questionId.Value, question.DomainId, question.QuestionText, question.IsSingleChoice,
                     question.FirstAnswerText, question.FirstAnswerCorrect,
                     question.SecondAnswerText, question.SecondAnswerCorrect,
-                    question.ThirdAnswerText, question.ThirdAnswerCorrect);
+                    question.ThirdAnswerText, question.ThirdAnswerCorrect,
+                    question.SubdomainId);
             }
             return RedirectToAction("AllQuestions");
         }
@@ -162,6 +168,13 @@ namespace QuizApp.Controllers
             }
 
             return AssignQuiz();
+        }
+
+        [HttpPost]
+        public ActionResult AddSubdomain(Models.AddSubdomainModel model)
+        {
+            repository.addQuizQuestionSubdomain(model.SubdomainName, model.DomainId);
+            return RedirectToAction("ManageDomains");
         }
     }
 }

@@ -75,6 +75,7 @@ namespace Repository
                 quizQuestionDto.Answer3Correct = quizQuestion.Answer3Correct;
                 quizQuestionDto.DomainId = quizQuestion.DomainId;
                 quizQuestionDto.IsSingleChoice = quizQuestion.IsSingleChoice;
+                quizQuestionDto.SubdomainId = quizQuestion.SubdomainId;
 
                 list.Add(quizQuestionDto);
             }
@@ -82,7 +83,7 @@ namespace Repository
         }
 
         public QuizQuestionDto addQuizQuestion(string questionText, string answer1Text, bool answer1Correct,
-            string answer2Text, bool answer2Correct, string answer3Text, bool answer3Correct, int domainId, bool isSingleChoice)
+            string answer2Text, bool answer2Correct, string answer3Text, bool answer3Correct, int domainId, bool isSingleChoice, int subdomainId)
         {
             QuizQuestion quizQuestion = new QuizQuestion();
             quizQuestion.QuestionText = questionText;
@@ -94,6 +95,7 @@ namespace Repository
             quizQuestion.Answer3Correct = answer3Correct;
             quizQuestion.DomainId = domainId;
             quizQuestion.IsSingleChoice = isSingleChoice;
+            quizQuestion.SubdomainId = subdomainId;
 
             QuizQuestion created = ctx.QuizQuestions.Add(quizQuestion);
             ctx.SaveChanges();
@@ -109,6 +111,7 @@ namespace Repository
             quizQuestionDto.Answer3Correct = created.Answer3Correct;
             quizQuestionDto.DomainId = created.DomainId;
             quizQuestionDto.IsSingleChoice = created.IsSingleChoice;
+            quizQuestionDto.SubdomainId = created.SubdomainId;
 
             return quizQuestionDto;
         }
@@ -116,7 +119,8 @@ namespace Repository
         public void UpdateQuizQuestion(int questionId, int domainId, string questionText, bool isSingleChoice,
             string answer1Text, bool answer1Correct,
             string answer2Text, bool answer2Correct,
-            string answer3Text, bool answer3Correct)
+            string answer3Text, bool answer3Correct, 
+            int subdomainId)
         {
             QuizQuestion quizQuestion = ctx.QuizQuestions.FirstOrDefault(x => x.Id == questionId);
             quizQuestion.QuestionText = questionText;
@@ -128,6 +132,7 @@ namespace Repository
             quizQuestion.Answer3Correct = answer3Correct;
             quizQuestion.DomainId = domainId;
             quizQuestion.IsSingleChoice = isSingleChoice;
+            quizQuestion.SubdomainId = subdomainId;
 
             ctx.SaveChanges();
         }
@@ -149,6 +154,7 @@ namespace Repository
             quizQuestionDto.Answer3Correct = quizQuestion.Answer3Correct;
             quizQuestionDto.DomainId = quizQuestion.DomainId;
             quizQuestionDto.IsSingleChoice = quizQuestion.IsSingleChoice;
+            quizQuestionDto.SubdomainId = quizQuestion.SubdomainId;
 
             return quizQuestionDto;
         }
@@ -356,6 +362,37 @@ namespace Repository
 
             ctx.QuizQuestionInstances.Add(qqi);
             ctx.SaveChanges();
+        }
+
+        public List<QuizQuestionSubdomainDto> getQuizQuestionSubdomains()
+        {
+            List<QuizQuestionSubdomainDto> list = new List<QuizQuestionSubdomainDto>();
+
+            foreach (var quizQuestionSubdomain in ctx.QuizQuestionSubdomains)
+            {
+                QuizQuestionSubdomainDto dto = new QuizQuestionSubdomainDto();
+                dto.Id = quizQuestionSubdomain.Id;
+                dto.Name = quizQuestionSubdomain.Name;
+                dto.DomainId = quizQuestionSubdomain.QuizQuestionDomainId;
+                list.Add(dto);
+            }
+
+            return list;
+        }
+
+        public QuizQuestionSubdomainDto addQuizQuestionSubdomain(string name, int domainId)
+        {
+            QuizQuestionSubdomain qqs = new QuizQuestionSubdomain();
+            qqs.Name = name;
+            qqs.QuizQuestionDomainId = domainId;
+            qqs = ctx.QuizQuestionSubdomains.Add(qqs);
+            ctx.SaveChanges();
+
+            QuizQuestionSubdomainDto qqsdto = new QuizQuestionSubdomainDto();
+            qqsdto.Id = qqs.Id;
+            qqsdto.Name = qqs.Name;
+            qqsdto.DomainId = qqs.QuizQuestionDomainId;
+            return qqsdto;
         }
     }
 }

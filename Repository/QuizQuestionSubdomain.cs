@@ -12,20 +12,12 @@ namespace Repository
     using System;
     using System.Collections.Generic;
     
-    public partial class QuizQuestionDomain
+    public partial class QuizQuestionSubdomain
     {
-        public QuizQuestionDomain()
-        {
-            this.Quizs = new HashSet<Quiz>();
-            this.QuizQuestions = new HashSet<QuizQuestion>();
-            this.QuizQuestionSubdomains = new HashSet<QuizQuestionSubdomain>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
+        public int QuizQuestionDomainId { get; set; }
     
-        public virtual ICollection<Quiz> Quizs { get; set; }
-        public virtual ICollection<QuizQuestion> QuizQuestions { get; set; }
-        public virtual ICollection<QuizQuestionSubdomain> QuizQuestionSubdomains { get; set; }
+        public virtual QuizQuestionDomain QuizQuestionDomain { get; set; }
     }
 }

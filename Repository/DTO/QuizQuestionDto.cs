@@ -18,5 +18,6 @@ namespace Repository.DTO
         public bool Answer3Correct { get; set; }
         public int DomainId {get; set;}
         public bool IsSingleChoice { get; set; }
+        public int SubdomainId{get;set;}
     }
 }

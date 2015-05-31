@@ -5,18 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d2fab383830248ad89692ab562e00722" Name="Diagram1" ZoomLevel="88" >
-        <EntityTypeShape EntityType="Model.QuizInstance" Width="1.5" PointX="5.25" PointY="6.875" />
-        <EntityTypeShape EntityType="Model.QuizQuestionDomain" Width="1.5" PointX="0.75" PointY="5.125" />
-        <EntityTypeShape EntityType="Model.QuizQuestionInstance" Width="1.5" PointX="7.5" PointY="4.625" />
-        <EntityTypeShape EntityType="Model.QuizQuestion" Width="1.5" PointX="3" PointY="2.75" />
-        <EntityTypeShape EntityType="Model.Quiz" Width="1.5" PointX="3" PointY="6.875" />
-        <EntityTypeShape EntityType="Model.User_QuizInstance" Width="1.5" PointX="7.5" PointY="8.125" />
-        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="5.25" PointY="10.125" />
+        <EntityTypeShape EntityType="Model.QuizInstance" Width="1.5" PointX="5.25" PointY="9.75" />
+        <EntityTypeShape EntityType="Model.QuizQuestionDomain" Width="1.5" PointX="0.75" PointY="6.625" />
+        <EntityTypeShape EntityType="Model.QuizQuestionInstance" Width="1.5" PointX="7.5" PointY="6.125" />
+        <EntityTypeShape EntityType="Model.QuizQuestion" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="Model.QuizQuestionSubdomain" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="Model.Quiz" Width="1.5" PointX="3" PointY="9.75" />
+        <EntityTypeShape EntityType="Model.User_QuizInstance" Width="1.5" PointX="7.5" PointY="10" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="5.25" PointY="7" />
         <AssociationConnector Association="Model.FK_QuizInstance_Quiz" />
         <AssociationConnector Association="Model.FK_QuizInstanceQuizQuestionInstance" />
         <AssociationConnector Association="Model.FK_User_QuizInstance_QuizInstance" />
         <AssociationConnector Association="Model.FK_Quiz_QuizQuestionDomain" />
         <AssociationConnector Association="Model.FK_QuizQuestion_QuizQuestionDomain" />
+        <AssociationConnector Association="Model.FK_QuizQuestionSubdomains_QuizQuestionDomains" />
         <AssociationConnector Association="Model.FK_QuizQuestionInstance_QuizQuestion" />
         <AssociationConnector Association="Model.FK_User_QuizInstance_User" />
       </Diagram>

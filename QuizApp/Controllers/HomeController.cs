@@ -12,26 +12,8 @@ namespace QuizApp.Controllers
     {
         private QuizAppRepo repo = new QuizAppRepo();
 
-        [HttpPost]
-        public ActionResult SustainQuiz(Models.StartQuizModel model)
+        private ActionResult TakeQuiz()
         {
-            Session["QuizInstanceId"] = model.QuizInstanceId;
-            int id;
-            List<Repository.DTO.QuizQuestionDto> questionsForQuiz = new List<Repository.DTO.QuizQuestionDto>();
-            bool res = Int32.TryParse(model.QuizInstanceId, out id);
-            List<QuestionInstanceDto> list = repo.getQuestionInstancesForQuizInstance(id);
-            Dictionary<string, string> questionForQuiz = new Dictionary<string, string>();
-
-            foreach(var item in list)
-            {
-                Repository.DTO.QuizQuestionDto ques = new Repository.DTO.QuizQuestionDto();
-                ques = repo.getQuizQuestion(id);
-                questionForQuiz[model.QuizInstanceId.ToString()] = ques.Id.ToString();
-                questionsForQuiz.Add(ques);
-            }
-
-            ViewBag.questionForQuiz = questionForQuiz;
-            ViewBag.questionsForQuiz = questionsForQuiz;
             return View();
         }
 

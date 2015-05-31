@@ -16,20 +16,22 @@ namespace QuizApp.Models
         public bool SecondAnswerCorrect { get; set; }
         public string ThirdAnswerText { get; set; }
         public bool ThirdAnswerCorrect { get; set; }
+        public int SubdomainId { get; set; }
 
         public QuestionModel()
         {
         }
 
-        public QuestionModel(int domainId, 
-            string questionText, 
+        public QuestionModel(int domainId,
+            string questionText,
             bool isSingleChoice,
             string firstAnswerText,
             bool firstAnswerCorrect,
             string secondAnswerText,
             bool secondAnswerCorrect,
-            string thirdAnswerText, 
-            bool thirdAnswerCorrect)
+            string thirdAnswerText,
+            bool thirdAnswerCorrect,
+            int subdomainId)
         {
             this.DomainId = domainId;
             this.QuestionText = questionText;
@@ -40,7 +42,7 @@ namespace QuizApp.Models
             this.SecondAnswerCorrect = secondAnswerCorrect;
             this.ThirdAnswerText = thirdAnswerText;
             this.ThirdAnswerCorrect = thirdAnswerCorrect;
+            this.SubdomainId = subdomainId;
         }
     }
-
 }
