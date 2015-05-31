@@ -9,7 +9,7 @@ namespace QuizApp.Models
     {
         public int DomainId { get; set; }
         public string QuestionText { get; set; }
-        public bool IsSingleChoice { get; set; }
+        public int QuestionType { get; set; }
         public string FirstAnswerText { get; set; }
         public bool FirstAnswerCorrect { get; set; }
         public string SecondAnswerText { get; set; }
@@ -35,7 +35,7 @@ namespace QuizApp.Models
         {
             this.DomainId = domainId;
             this.QuestionText = questionText;
-            this.IsSingleChoice = isSingleChoice;
+            this.QuestionType = isSingleChoice == true ? 0 : 1;
             this.FirstAnswerText = firstAnswerText;
             this.FirstAnswerCorrect = firstAnswerCorrect;
             this.SecondAnswerText = secondAnswerText;

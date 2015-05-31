@@ -38,6 +38,8 @@ namespace QuizApp.Controllers
                 }
             }
 
+            qidto = repo.GetQuizInstance(quizInstanceId);
+
             ViewBag.QuizInstanceId = quizInstanceId;
             ViewBag.CurrentIndex = index;
             ViewBag.MaxIndex = lqi.Count;
@@ -82,13 +84,16 @@ namespace QuizApp.Controllers
                     numCorrect++;
             }
 
-            if ((double)numCorrect / numTotal >= repo.getQuiz(repo.GetQuizInstance(quizInstanceId).QuizId).PassingScore)
+            double passingScore = repo.getQuiz(repo.GetQuizInstance(quizInstanceId).QuizId).PassingScore;
+            double myScore = (double)numCorrect / numTotal * 100;
+
+            if (myScore >= passingScore)
             {
-                ViewBag.Message = "Felicitari, ai trecut examenul cu scorul: " + ((double)numCorrect / numTotal);
+                ViewBag.Message = "Felicitari, ai trecut examenul cu scorul: " + myScore + "%";
             }
             else
             {
-                ViewBag.Message = "Ne pare rau, nu ai trecut examenul, scorul tau este: " + ((double)numCorrect / numTotal);
+                ViewBag.Message = "Ne pare rau, nu ai trecut examenul, scorul tau este: " + myScore + "%";
             }
 
             return View();

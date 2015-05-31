@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Diagnostics;
 using Repository.DTO;
 using System.Collections;
+using Newtonsoft.Json;
 
 
 namespace QuizApp.Controllers
@@ -22,6 +23,22 @@ namespace QuizApp.Controllers
         {
             ViewBag.Domains = repository.getQuestionDomains();
             ViewBag.Subdomains = repository.getQuizQuestionSubdomains();
+
+            Dictionary<int, Dictionary<int, string>> data = new Dictionary<int, Dictionary<int, string>>();
+            foreach (var domain in ViewBag.Domains)
+            {
+                Dictionary<int, string> dict = new Dictionary<int, string>();
+                foreach (var subdomain in ViewBag.Subdomains)
+                {
+                    if (subdomain.DomainId == domain.Id)
+                    {
+                        dict[subdomain.Id] = subdomain.Name;
+                    }
+                }
+                data[domain.Id] = dict;
+            }
+
+            ViewBag.SubdomainData = JsonConvert.SerializeObject(data);
 
             if (questionId.HasValue == false)
             {
@@ -92,11 +109,11 @@ namespace QuizApp.Controllers
         {
             if (questionId.HasValue == false)
             {
-                repository.addQuizQuestion(question.QuestionText, question.FirstAnswerText, question.FirstAnswerCorrect, question.SecondAnswerText, question.SecondAnswerCorrect, question.ThirdAnswerText, question.ThirdAnswerCorrect, question.DomainId, question.IsSingleChoice, question.SubdomainId);
+                repository.addQuizQuestion(question.QuestionText, question.FirstAnswerText, question.FirstAnswerCorrect, question.SecondAnswerText, question.SecondAnswerCorrect, question.ThirdAnswerText, question.ThirdAnswerCorrect, question.DomainId, question.QuestionType == 0, question.SubdomainId);
             }
             else
             {
-                repository.UpdateQuizQuestion(questionId.Value, question.DomainId, question.QuestionText, question.IsSingleChoice,
+                repository.UpdateQuizQuestion(questionId.Value, question.DomainId, question.QuestionText, question.QuestionType == 0,
                     question.FirstAnswerText, question.FirstAnswerCorrect,
                     question.SecondAnswerText, question.SecondAnswerCorrect,
                     question.ThirdAnswerText, question.ThirdAnswerCorrect,
