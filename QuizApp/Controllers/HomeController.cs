@@ -1,4 +1,14 @@
-﻿using Repository;
+﻿ /// <summary>
+ /// Nume si prenume: Hurjui Danut/Sandru Adrian/Chmilevski Paul Albert
+ /// Laborator: Vineri 16-18
+ /// Tema laborator: Proiect ASP.NET MVC 
+ /// Data predare proiect: 29.05.2015
+ /// Declaratie: Declar pe propria raspundere ca acest proiect nu a fost copiat
+ ///din alte surse
+ /// Bibliografie, surse de inspiratie: MSDN, http://codeprojects, carti
+ /// </summary> 
+
+using Repository;
 using Repository.DTO;
 using System;
 using System.Collections.Generic;
