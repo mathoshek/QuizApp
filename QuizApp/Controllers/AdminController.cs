@@ -172,17 +172,55 @@ namespace QuizApp.Controllers
 
             QuizDto qdto = repository.getQuiz(model.QuizId);
 
-            // TODO: adauga random intrebari;
-            foreach (var x in repository.getQuizQuestions().Where(x => x.DomainId == qdto.DomainId))
+            List<int> questionIdsRandom = new List<int>();
+            Random rnd = new Random();
+            int length = repository.getQuizQuestions().Where(x => x.DomainId == qdto.DomainId).Count();
+            for (int i = 0; i < length; i++)
             {
-                QuestionInstanceDto qidto = new QuestionInstanceDto();
-                qidto.QuestionId = x.Id;
-                qidto.QuizInstanceId = qi.Id;
-                qidto.AnswerSaved = false;
-                qidto.Choice1 = false;
-                qidto.Choice2 = false;
-                qidto.Choice3 = false;
-                repository.addQuestionInstance(qidto);
+                questionIdsRandom.Add(i);
+            }
+            List<int> randomQuestion = new List<int>();
+
+            if (length <= 10)
+            {
+                foreach (var x in repository.getQuizQuestions().Where(x => x.DomainId == qdto.DomainId))
+                {
+                    QuestionInstanceDto qidto = new QuestionInstanceDto();
+                    qidto.QuestionId = x.Id;
+                    qidto.QuizInstanceId = qi.Id;
+                    qidto.AnswerSaved = false;
+                    qidto.Choice1 = false;
+                    qidto.Choice2 = false;
+                    qidto.Choice3 = false;
+                    repository.addQuestionInstance(qidto);
+                }
+            }
+            else
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    int question = rnd.Next(0, questionIdsRandom.Count);
+                    randomQuestion.Add(questionIdsRandom.ElementAt(question));
+                    int elem = questionIdsRandom.ElementAt(question);
+                    questionIdsRandom.Remove(elem);
+                }
+                 foreach (var id in randomQuestion)
+                 {
+                    foreach (var x in repository.getQuizQuestions().Where(x => x.DomainId == qdto.DomainId))
+                    {
+                        if (x.Id == id)
+                        {
+                            QuestionInstanceDto qidto = new QuestionInstanceDto();
+                            qidto.QuestionId = x.Id;
+                            qidto.QuizInstanceId = qi.Id;
+                            qidto.AnswerSaved = false;
+                            qidto.Choice1 = false;
+                            qidto.Choice2 = false;
+                            qidto.Choice3 = false;
+                            repository.addQuestionInstance(qidto);
+                        }
+                    }
+                }
             }
 
             return AssignQuiz();

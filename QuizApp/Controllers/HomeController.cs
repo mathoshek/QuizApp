@@ -5,8 +5,9 @@
  /// Data predare proiect: 29.05.2015
  /// Declaratie: Declar pe propria raspundere ca acest proiect nu a fost copiat
  ///din alte surse
- /// Bibliografie, surse de inspiratie: MSDN, http://codeprojects, carti
- /// </summary> 
+ /// Bibliografie, surse de inspiratie: MSDN, http://codeprojects, carti, cursuri
+ /// </summary> 
+
 
 using Repository;
 using Repository.DTO;

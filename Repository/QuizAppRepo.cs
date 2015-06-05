@@ -373,7 +373,8 @@ namespace Repository
         public List<QuizQuestionSubdomainDto> getQuizQuestionSubdomains()
         {
             List<QuizQuestionSubdomainDto> list = new List<QuizQuestionSubdomainDto>();
-
+            if (ctx.QuizQuestionSubdomains == null)
+                return list;
             foreach (var quizQuestionSubdomain in ctx.QuizQuestionSubdomains)
             {
                 QuizQuestionSubdomainDto dto = new QuizQuestionSubdomainDto();
